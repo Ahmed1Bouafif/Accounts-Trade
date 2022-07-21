@@ -1,13 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Rampart+One&display=swap");
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 100%);
+}
+/* -------login && singup------ */
+.container-login {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  background-image: url(../public/G.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  text-align: center;
+  justify-content: center;
+  animation: bgChange 30s ease-in-out infinite;
+}
+.form-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.from-login-inputs {
+  height: 2.5rem;
+  width: 70%;
+  border-radius: 0.8rem;
+  padding: 0rem 0.9rem;
+  font-size: large;
+}
+.from-login-inputs:focus {
+  opacity: 1;
+  transform: scale(1);
+  border: none;
+  box-shadow: inset 0 0 0 3px #fff, 0 0 0 4px rgb(78, 77, 77), 3px -3px 30px #292a2a, -3px 3px 30px #000000;
+}
+
+.form-login-google:hover {
+  background-color: red;
+}
+
+.form-login-facebook:hover {
+  background-color: blue;
+}
+.form-login-login:hover {
+  background-color: #000000;
+}
+.form-login-login,
+.form-login-facebook,
+.form-login-google {
+  background-color: grey;
+}
+.form-login-google,
+.form-login-facebook,
+.form-login-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: white;
+  font-weight: bold;
+  height: 2.5rem;
+  width: 70%;
+  border-radius: 0.8rem;
+  padding: 0rem 0.9rem;
+  font-size: medium;
+}
+
+.app-name {
+  font-family: "Rampart One", cursive;
+  font-size: xx-large;
+  font-weight: bold;
+  color: white;
+}
+.go-signup {
+  font-family: "Rampart One", cursive;
+  font-size: medium;
+  font-weight: bold;
+  color: white;
+}
+
+@media screen and (min-width: 768px) {
+  .from-login-inputs {
+    width: 25%;
+  }
+  .form-login-google,
+  .form-login-facebook,
+  .form-login-login {
+    width: 25%;
+  }
+  .container-login {
+    width: 60%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .form-login {
+    position: fixed;
+    top: 50%;
+    left: 10%;
+    transform: translate(-35%, -50%);
+  }
+}
+
+@keyframes bgChange {
+  0% {
+    background-image: url(../public/B.png);
+  }
+  10% {
+    background-image: url(../public/C.png);
+  }
+  20% {
+    background-image: url(../public/D.png);
+  }
+  30% {
+    background-image: url(../public/E.png);
+  }
+  40% {
+    background-image: url(../public/F.png);
+  }
+  50% {
+    background-image: url(../public/G.png);
+  }
+  60% {
+    background-image: url(../public/H.png);
+  }
+  70% {
+    background-image: url(../public/I.png);
+  }
+  80% {
+    background-image: url(../public/J.png);
+  }
+  90% {
+    background-image: url(../public/A.png);
+  }
+  100% {
+    background-image: url(../public/B.png);
+  }
 }
