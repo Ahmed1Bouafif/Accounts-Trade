@@ -64,3 +64,23 @@ export const signup = async (req, res) => {
     console.log(error)
   }
 }
+
+export const googleSignIn = async (req, res) => {
+  const { email, userName, token, googleId } = req.body
+  try {
+    const olduser = await UserModal.findOne({ email })
+    if (olduser) {
+      const result = { _id: olduser._id.toString(), email, userName }
+      return res.status(200).json({ result, token })
+    }
+    const result = await UserModal.create({
+      email,
+      userName,
+      googleId,
+    })
+    res.status(200).json({ result, token })
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" })
+    console.log(error)
+  }
+}

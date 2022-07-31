@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
-import { login } from "../redux/features/authSlice.js"
+import { googleSignIn, login } from "../redux/features/authSlice.js"
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import { TailSpin } from "react-loader-spinner"
+import { GoogleLogin } from "react-google-login"
+import { gapi } from "gapi-script"
 const Login = () => {
   const userInitialState = {
     email: "",
@@ -11,6 +15,7 @@ const Login = () => {
   const [formData, setFormData] = useState(userInitialState)
   const { email, password } = formData
   const { loading, error } = useSelector((state) => ({ ...state.auth }))
+  // const reLogin = useRef(false)
 
   useEffect(() => {
     error && toast.error(error)
@@ -28,7 +33,32 @@ const Login = () => {
     if (email && password) {
       dispatch(login({ formData, navigate, toast }))
     }
+    // reLogin.current = !reLogin.current
   }
+
+  const googleResponseSuccess = (response) => {
+    const email = response?.profileObj?.email
+    const userName = response?.profileObj?.name
+    const token = response?.tokenId
+    const googleId = response?.googleId
+    const result = { email, userName, token, googleId }
+    dispatch(googleSignIn({ result, navigate, toast }))
+  }
+
+  const googleResponseFailure = (error) => {
+    toast.error(error)
+  }
+
+  useEffect(() => {
+    const Google = () => {
+      gapi.client.init({
+        clientId: "975840121425-mndjta3rfk157dppvtjtt7s372pf04vs.apps.googleusercontent.com",
+        scope: "email",
+      })
+    }
+    gapi.load("client:auth2", Google)
+  }, [])
+
   return (
     <div className="container-login">
       <div className="form-login">
@@ -36,16 +66,24 @@ const Login = () => {
         <input value={email} name="email" onChange={onInputChange} type="email" placeholder="Your Email" className="from-login-inputs" />
         <input value={password} name="password" onChange={onInputChange} type="password" placeholder="Your Password" className="from-login-inputs" />
         <button onClick={handleSubmit} className="form-login-login">
-          {loading && <p>waiit</p>}
+          {loading && <TailSpin color="#fff" height={26} width={26} />}
           Login
         </button>
-        <button className="form-login-google">
-          {" "}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
-            <path d="M128,24A104,104,0,1,0,232,128,104.2,104.2,0,0,0,128,24Zm0,184A80,80,0,1,1,184.6,71.4a8,8,0,0,1,0,11.3,7.9,7.9,0,0,1-11.3,0A64.1,64.1,0,1,0,191.5,136H128a8,8,0,0,1,0-16h72a8,8,0,0,1,8,8A80.1,80.1,0,0,1,128,208Z" fill="white" />
-          </svg>{" "}
-          GOOGLE LOGIN
-        </button>
+        <GoogleLogin
+          clientId="975840121425-mndjta3rfk157dppvtjtt7s372pf04vs.apps.googleusercontent.com"
+          render={(renderProps) => (
+            <button onClick={renderProps.onClick} disabled={renderProps.disabled} className="form-login-google">
+              {" "}
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+                <path d="M128,24A104,104,0,1,0,232,128,104.2,104.2,0,0,0,128,24Zm0,184A80,80,0,1,1,184.6,71.4a8,8,0,0,1,0,11.3,7.9,7.9,0,0,1-11.3,0A64.1,64.1,0,1,0,191.5,136H128a8,8,0,0,1,0-16h72a8,8,0,0,1,8,8A80.1,80.1,0,0,1,128,208Z" fill="white" />
+              </svg>{" "}
+              GOOGLE LOGIN
+            </button>
+          )}
+          onSuccess={googleResponseSuccess}
+          onFailure={googleResponseFailure}
+          cookiePolicy="single_host_origin"
+        />
         <button className="form-login-facebook">
           {" "}
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
