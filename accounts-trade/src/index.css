@@ -1,14 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Rampart+One&family=Reggae+One&display=swap");
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   width: 100%;
-  height: 100vh;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  height: 100%;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 100%); */
 }
+
 /* -------login && singup------ */
+.all {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .container-login {
   height: 100vh;
   width: 100vw;
@@ -108,7 +119,7 @@ body {
   color: whitesmoke;
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) {
   .from-login-inputs {
     width: 25%;
   }
@@ -195,7 +206,7 @@ body {
   left: 0;
   right: 0;
   height: 90px;
-  background-color: black;
+  background-color: #292a2a;
 }
 .nav-items > a {
   color: white;
@@ -233,7 +244,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding-inline: 5%;
-  z-index: 99999;
+  z-index: 2;
 }
 .logo {
   content: url(../public/Logo.jpeg);
@@ -244,11 +255,97 @@ body {
 }
 
 .nav-toggle {
+  /* .nav-mob  */
+  /* .nav-toggle-notification, */
   display: none;
 }
 
+.nav-notif {
+  z-index: 99;
+  border-bottom: 15px goldenrod solid;
+  border-top: 10px goldenrod solid;
+  width: 100%;
+}
+.nav-notif {
+  height: 70vh;
+  padding-top: 0;
+}
+.nav-search {
+  width: 100%;
+  height: 70vh;
+  padding-top: 60px;
+}
+
+.nav-notif {
+  position: absolute;
+  top: 55px;
+  display: flex;
+  flex-direction: column;
+  background: #292a2a;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 25%;
+  width: 100%;
+  height: 100vh;
+  transform: translateX(-8000vw);
+  transition: all 0.4 ease;
+  z-index: 99999;
+  overflow-y: scroll;
+}
+.nav-toggle-notification {
+  color: #fff;
+}
+.open {
+  transform: translateX(5vw);
+  top: 90px;
+  height: 60vh;
+  width: 30vw;
+  padding: 0;
+}
+.nav-search {
+  padding-top: 60px;
+}
+/* .nav-notif {
+  transform: translateX(0vw);
+
+  height: 70vh;
+  padding-top: 0;
+} */
+.nav-mob {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  align-items: center;
+}
 @media (max-width: 768px) {
-  .nav-toggle {
+  .nav-items,
+  .nav-notif {
+    position: absolute;
+    top: 55px;
+    display: flex;
+    flex-direction: column;
+    background: #292a2a;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 25%;
+    width: 100%;
+    height: 100vh;
+    transform: translateX(-8000vw);
+    transition: all 0.4 ease;
+    z-index: 99999;
+    overflow-y: scroll;
+  }
+  .nav-notif {
+    height: 70vh;
+    padding-top: 0;
+  }
+  .nav-search {
+    height: 70vh;
+    padding-top: 60px;
+  }
+  .nav-toggle,
+  .nav-toggle-notification {
     display: flex;
     width: 50px;
     height: 50px;
@@ -274,55 +371,43 @@ body {
   }
   .bars::after {
     transform: translateY(-10px);
-    width: 35px;
+    width: 100%;
     right: 0;
   }
   .bars::before {
     transform: translateY(10px);
-    width: 35px;
+    width: 100%;
     right: 0;
   }
 
   .open > .bars {
-    transform: translateX(-40px);
+    transform: translateX(15px);
     background: transparent;
   }
   .open > .bars::before {
-    width: 35px;
-    transform: rotate(45deg) translate(26px, -26px);
+    width: 100%;
+    transform: rotate(45deg) translate(-10px, 10px);
     background: red;
   }
   .open > .bars::after {
     width: 35px;
-    transform: rotate(-45deg) translate(26px, 26px);
+    transform: rotate(-45deg) translate(-10px, -10px);
     background: red;
   }
 
   .logo {
     height: 50px;
     width: 70px;
-    border-radius: 15px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   }
   .nav {
+    width: 100vw;
     height: 60px;
     padding-inline: 0;
   }
-  .nav-items {
-    position: absolute;
-    top: 60px;
-    display: flex;
-    flex-direction: column;
-    background: black;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 20%;
-    width: 100%;
-    height: 100vh;
-    transform: translateY(-200vh);
-    transition: all 0.4 ease;
-  }
+
   .open {
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
@@ -330,7 +415,7 @@ body {
 
 .homepage-container {
   margin-top: 100px;
-  margin-inline: 6%;
+  margin-inline: 7%;
 }
 
 .description {
@@ -338,7 +423,7 @@ body {
   font-family: "Reggae One", cursive;
   font-size: xx-large;
   font-weight: bold;
-  color: white;
+  color: #d81811;
   text-transform: capitalize;
 }
 
@@ -370,7 +455,9 @@ body {
   align-items: center;
   gap: 1rem;
   padding: 10px;
-  border: 4px black dotted;
+  /* border: 4px black dotted; */
+  background-color: #292a2a;
+  position: relative;
 }
 .card-header {
   display: flex;
@@ -401,16 +488,129 @@ body {
   font-size: smaller;
   font-weight: 700;
 }
+.rank {
+  color: goldenrod;
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-size: larger;
+  font-weight: 700;
+  border: 5px red solid;
+  padding: 5px 15px;
+  border-radius: 50%;
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+}
 .users {
   height: 23vh;
-  width: 20vw;
+  width: 23vw;
   border-radius: 15px;
 }
 
+.join {
+  height: 30vh;
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.joinText,
+.JoinButton {
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-size: large;
+  color: white;
+  font-weight: 700;
+}
+.JoinButton {
+  height: 10vh;
+  width: 60%;
+  clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+  background-color: #292a2a;
+  border: 5px goldenrod solid;
+}
+.JoinButton > a {
+  color: white;
+  text-decoration: none;
+  margin: 15px;
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-size: medium;
+  font-weight: bold;
+  position: relative;
+  opacity: 0.9;
+}
+.footer {
+  background-color: #292a2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* margin-inline: ; */
+  /* width: 100vw; */
+  margin-top: 2rem;
+  width: 100%;
+}
+.footerDetails {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+.footerDetails > li {
+  list-style: none;
+  color: #d81811;
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-size: small;
+  font-weight: 200;
+}
+.socials {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.footer > p {
+  color: whitesmoke;
+}
+.socialf {
+  color: rgb(62, 62, 247);
+}
+.socialg {
+  color: rgb(236, 60, 60);
+}
+.sociali {
+  color: rgb(253, 141, 159);
+}
+.search-input {
+  align-self: center;
+  width: 100%;
+  border-radius: 0;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 @media (max-width: 768px) {
-  .homepage-container {
-    margin-top: 70px;
+  .footerDetails {
+    width: 90%;
+    text-align: start;
   }
+
   .description {
     font-size: x-large;
     margin: 3px;
@@ -443,12 +643,23 @@ body {
     width: 100px;
     border-radius: 50%;
   }
+  .rank {
+    top: 0;
+    left: 0;
+  }
+  .homepage-container {
+    margin-top: 70px;
+    /* width: 100%; */
+  }
 }
 
 /* ------ carrousel -------*/
 
 .carousel {
   display: none;
+}
+.carrousel {
+  z-index: 1;
 }
 
 ul.slides {
@@ -490,7 +701,7 @@ ul.slides input {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 1;
   font-size: 80px;
   line-height: 200px;
   color: red;
@@ -526,7 +737,7 @@ ul.slides input {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 999;
+  z-index: 1;
   text-align: center;
 }
 
@@ -582,5 +793,219 @@ input:checked + .slide-container .nav label {
   .carousel-controls {
     position: absolute;
     top: 30%;
+  }
+  .search-container {
+    height: 11vh;
+    width: 30vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+    gap: 1rem;
+    padding: 1rem 0.2rem;
+    background-color: white;
+    margin-top: 3px;
+  }
+}
+
+/*------- notification -------*/
+
+.notification-container {
+  height: 11vh;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-inline: auto;
+  gap: 1rem;
+  padding: 1rem 0.2rem;
+  background-color: white;
+  margin-top: 3px;
+}
+.search-container {
+  height: 11vh;
+  width: 95vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-inline: auto;
+  gap: 1rem;
+  padding: 1rem 0.2rem;
+  background-color: white;
+  margin-top: 3px;
+}
+.notification-img {
+  height: 9vh;
+  width: 20%;
+  border-radius: 50%;
+}
+
+/* .notification-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+} */
+
+.notification-text > p:last-child {
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  color: #d81811;
+  font-size: small;
+  font-weight: 800;
+}
+.notification-text > p:first-child {
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  color: black;
+  font-size: small;
+  font-weight: 700;
+}
+
+.getdown {
+  margin-top: 60px;
+  width: 100%;
+  z-index: 0.1;
+  background-color: black;
+  color: #fff;
+}
+
+/* ---------profile----------*/
+
+.ProfileContainer {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Go-Back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #d81811;
+  cursor: pointer;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  justify-content: center;
+  align-items: center;
+}
+.profile {
+  background-color: black;
+  padding: 1rem 2.5rem;
+  border-radius: 40%;
+}
+.statProfile {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+  gap: 1rem;
+}
+.profile-input {
+  width: 90%;
+}
+.profile-button {
+  width: 90%;
+}
+.user-profile {
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 35%;
+  width: 75%;
+  border: 2px whitesmoke solid;
+  /* border: 4px red solid; */
+}
+
+@media (min-width: 768px) {
+  .search-container {
+    height: 11vh;
+    width: 27vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-inline: auto;
+    gap: 1rem;
+    padding: 1rem 0.2rem;
+    background-color: white;
+    margin-top: 3px;
+  }
+}
+
+/* .allgames::after {
+  float: right;
+  right: 10%;
+  content: "▽";
+} */
+.allgames {
+  margin-top: -10px;
+  width: 100vw;
+  margin-inline: -8.1%;
+
+  position: relative;
+  height: 50px;
+  color: #d81811;
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-size: large;
+  font-weight: bold;
+  background-color: #000000;
+}
+
+/* .allgamesoption {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+} */
+
+.postContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 70%;
+  gap: 1.2rem;
+  border: black 3px solid;
+  border-radius: 10%;
+}
+.post {
+  width: 85%;
+}
+.post-title,
+.field-text {
+  width: 80% !important;
+}
+.field-text {
+  height: 15vh;
+  max-width: 100%;
+}
+.post-ok,
+.clear-post {
+  width: 60%;
+}
+.post-ok {
+  background-color: #292a2a;
+}
+.clear-post {
+  background-color: #d81811;
+}
+.upload {
+  font-weight: 700;
+  color: #d81811;
+}
+@media (max-width: 768px) {
+  .postContainer {
+    width: 97%;
+  }
+  .post {
+    width: 100%;
   }
 }

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -19,6 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-facebook-login": "^4.1.1",
+    "react-file-base64": "^1.0.3",
     "react-google-login": "^5.2.2",
     "react-loader-spinner": "^5.1.5",
     "react-redux": "^8.0.2",
@@ -53,6 +55,10 @@
     ]
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "nodemon": "^2.0.19"
   }
 }

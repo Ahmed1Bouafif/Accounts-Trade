@@ -40,21 +40,23 @@ const Register = () => {
   }
 
   return (
-    <div className="container-login">
-      <div className="form-login">
-        <h2 className="app-name">Accounts Trade</h2>
-        <input value={firstName} name="firstName" onChange={onInputChange} type="text" placeholder="Your firstName" className="from-login-inputs" />
-        <input value={lastName} name="lastName" onChange={onInputChange} type="text" placeholder="Your lastName" className="from-login-inputs" />
-        <input value={email} name="email" onChange={onInputChange} type="email" placeholder="Your Email" className="from-login-inputs" />
-        <input value={password} name="password" onChange={onInputChange} type="password" placeholder="Your Password" className="from-login-inputs" />
-        <input value={confirmePassword} name="confirmePassword" onChange={onInputChange} type="password" placeholder="Your confirmePassword" className="from-login-inputs" />
-        <button onClick={handleSubmit} className="form-login-login">
-          {loading && <TailSpin color="#fff" height={26} width={26} />}
-          Register
-        </button>
-        <Link to={"/Login"}>
-          <p className="go-signup">Already Have An Account ? Sign In</p>
-        </Link>
+    <div className="all">
+      <div className="container-login">
+        <div className="form-login">
+          <h2 className="app-name">Accounts Trade</h2>
+          <input value={firstName} name="firstName" onChange={onInputChange} type="text" placeholder="Your firstName" className="from-login-inputs" />
+          <input value={lastName} name="lastName" onChange={onInputChange} type="text" placeholder="Your lastName" className="from-login-inputs" />
+          <input value={email} name="email" onChange={onInputChange} type="email" placeholder="Your Email" className="from-login-inputs" />
+          <input value={password} name="password" onChange={onInputChange} type="password" placeholder="Your Password" className="from-login-inputs" />
+          <input value={confirmePassword} name="confirmePassword" onChange={onInputChange} type="password" placeholder="Your confirmePassword" className="from-login-inputs" />
+          <button onClick={handleSubmit} className="form-login-login">
+            {loading && <TailSpin color="#fff" height={26} width={26} />}
+            Register
+          </button>
+          <Link to={"/Login"}>
+            <p className="go-signup">Already Have An Account ? Sign In</p>
+          </Link>
+        </div>
       </div>
     </div>
   )
