@@ -21,9 +21,10 @@ const NaveBar = ({ setCarrousel, carrousel }) => {
       <img alt="Logo" className="logo" />
       <div className={`nav-items ${mobileNavOpen && "open"} `}>
         <a href="/">Home</a>
+        {user?.result?._id ? <></> : <a href="/register">Register</a>}
         {user?.result?._id ? <a href="/AddPost">Add Post</a> : <></>}
         {user?.result?._id ? <a href="/Chat">Chat</a> : <></>}
-        {user?.result?._id ? <a href="/Profile">Profile</a> : <></>}
+        {user?.result?._id ? <a href={`/Profile/${user?.result?._id}`}>Profile</a> : <></>}
         {user?.result?._id ? (
           <a href="/" onClick={handelLogount}>
             Logout

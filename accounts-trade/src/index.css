@@ -599,10 +599,12 @@ body {
   width: 100%;
   border-radius: 0;
   height: 60px;
-  position: fixed;
+  color: white;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 3;
 }
 
 @media (max-width: 768px) {
@@ -936,6 +938,38 @@ input:checked + .slide-container .nav label {
     background-color: white;
     margin-top: 3px;
   }
+  .ProfileContainer {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 15%;
+  }
+  .pcProfile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-profile {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 45%;
+    width: 40%;
+    border: 2px whitesmoke solid;
+    border-radius: 0%;
+    margin-left: 10%;
+    /* top: 0; */
+  }
+}
+.pcProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* .allgames::after {
@@ -1008,4 +1042,96 @@ input:checked + .slide-container .nav label {
   .post {
     width: 100%;
   }
+}
+
+.postCard {
+  height: auto;
+  width: 100%;
+  background-color: white;
+  margin: 1rem 0rem;
+  position: relative;
+}
+.owner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #292a2a;
+}
+.ownerimg {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.postimg {
+  height: 15vh;
+  width: 100%;
+  scale: (0.1);
+}
+.readmore {
+  color: dodgerblue;
+  font-size: large;
+  font-weight: 700;
+}
+.cardFooter {
+  position: relative;
+  margin: 10px 10px;
+  width: 90%;
+}
+.posttitle {
+  font-size: x-large;
+  font-weight: 700;
+  text-transform: capitalize;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.postdescription {
+  font-size: medium;
+  text-transform: capitalize;
+  width: 80vw;
+}
+.bla {
+  margin: 15px 5px;
+  /* margin-top: 60%; */
+}
+.timeadd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5vh;
+}
+.time {
+  /* position: absolute;
+  top: 15px;
+  right: 15px; */
+  color: #d81811;
+  font-size: medium;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .downCard {
+    display: flex;
+    gap: 1rem;
+  }
+  .postimg {
+    height: 25vh;
+    width: 25vw;
+  }
+  .postdescription {
+    font-size: medium;
+    text-transform: capitalize;
+    width: 100%;
+  }
+  .owner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #292a2a;
+    height: 8vh;
+  }
+}
+
+.requests{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

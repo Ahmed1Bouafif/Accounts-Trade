@@ -1,12 +1,31 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Post from "../components/Post"
+import { getPosts } from "../redux/features/postSlice"
+
 const HomeVerified = () => {
+  const { loading, posts } = useSelector((state) => ({ ...state.post }))
+  const dispatch = useDispatch()
+  const [type, setType] = useState("")
+  const [allPosts, setAllPosts] = useState(posts)
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [])
+  useEffect(() => {
+    if (type === "All Games") {
+      setAllPosts(posts.slice(0).reverse())
+    } else {
+      setAllPosts(
+        posts
+          .slice(0)
+          .reverse()
+          .filter((e) => e.typeOfPost === type)
+      )
+    }
+  }, [type])
   return (
     <div className="homepage-container pickgame">
-      {/* <label className="allgames" for="allgames">
-        All Games
-      </label> */}
-
-      <select name="allgames" className="allgames">
+      <select name="allgames" onChange={(e) => setType(e.target.value)} className="allgames">
         <option className="allgamesoption" value="All Games">
           All Games
         </option>
@@ -23,7 +42,23 @@ const HomeVerified = () => {
           Ark Of War
         </option>
       </select>
-      <div className="description">you are verified so welcode to our community (the real home page)</div>
+      {loading ? (
+        <div className="description"> ...Loading </div>
+      ) : (
+        <div>
+          {!type ? (
+            <div>
+              {posts &&
+                posts
+                  .slice(0)
+                  .reverse()
+                  .map((e, i) => <Post key={i} {...e} />)}
+            </div>
+          ) : (
+            <div>{posts && allPosts.map((e, i) => <Post key={i} {...e} />)}</div>
+          )}{" "}
+        </div>
+      )}
     </div>
   )
 }

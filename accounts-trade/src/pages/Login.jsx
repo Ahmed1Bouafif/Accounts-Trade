@@ -41,7 +41,8 @@ const Login = () => {
     const userName = response?.profileObj?.name
     const token = response?.tokenId
     const googleId = response?.googleId
-    const result = { email, userName, token, googleId }
+    const userImage = response?.profileObj?.imageUrl
+    const result = { email, userName, token, googleId, userImage }
     dispatch(googleSignIn({ result, navigate, toast }))
   }
 

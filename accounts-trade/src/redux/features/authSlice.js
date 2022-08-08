@@ -10,6 +10,7 @@ export const login = createAsyncThunk("auth/login", async ({ formData, navigate,
     return rejectWithValue(error.response.data)
   }
 })
+
 export const register = createAsyncThunk("auth/register", async ({ formData, navigate, toast }, { rejectWithValue }) => {
   try {
     const response = await api.register(formData)
@@ -34,7 +35,7 @@ export const googleSignIn = createAsyncThunk("auth/googleSignIn", async ({ resul
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    userConnected: null,
     error: "",
     loading: false,
   },
@@ -55,7 +56,7 @@ const authSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       state.loading = false
       localStorage.setItem("userProfile", JSON.stringify({ ...action.payload }))
-      state.user = action.payload
+      state.userConnected = action.payload
     },
     [login.rejected]: (state, action) => {
       state.loading = false
@@ -67,7 +68,7 @@ const authSlice = createSlice({
     [register.fulfilled]: (state, action) => {
       state.loading = false
       localStorage.setItem("userProfile", JSON.stringify({ ...action.payload }))
-      state.user = action.payload
+      state.userConnected = action.payload
     },
     [register.rejected]: (state, action) => {
       state.loading = false
@@ -79,7 +80,7 @@ const authSlice = createSlice({
     [googleSignIn.fulfilled]: (state, action) => {
       state.loading = false
       localStorage.setItem("userProfile", JSON.stringify({ ...action.payload }))
-      state.user = action.payload
+      state.userConnected = action.payload
     },
     [googleSignIn.rejected]: (state, action) => {
       state.loading = false

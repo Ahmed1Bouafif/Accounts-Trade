@@ -12,6 +12,15 @@ export const createPost = createAsyncThunk("post/createPost", async ({ updatedPo
   }
 })
 
+export const getPosts = createAsyncThunk("post/getPosts", async (_, { rejectWithValue }) => {
+  try {
+    const response = await api.getPosts()
+    return response.data
+  } catch (error) {
+    return rejectWithValue(error.response.data)
+  }
+})
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -30,6 +39,17 @@ const postSlice = createSlice({
       state.posts = [action.payload]
     },
     [createPost.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.payload.message
+    },
+    [getPosts.pending]: (state, action) => {
+      state.loading = true
+    },
+    [getPosts.fulfilled]: (state, action) => {
+      state.loading = false
+      state.posts = action.payload
+    },
+    [getPosts.rejected]: (state, action) => {
       state.loading = false
       state.error = action.payload.message
     },

@@ -36,7 +36,7 @@ const AddPost = () => {
   const onHandelSubmit = (e) => {
     e.preventDefault()
     if (title && description) {
-      const updatedPost = { ...postData, name: user?.result?.userName }
+      const updatedPost = { ...postData, name: user?.result?.userName, posterImage: user?.result?.userImage }
       dispatch(createPost({ updatedPost, navigate, toast }))
       // onClear()
     }

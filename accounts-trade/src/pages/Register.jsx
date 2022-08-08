@@ -5,6 +5,8 @@ import { toast } from "react-toastify"
 import { register } from "../redux/features/authSlice.js"
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { TailSpin } from "react-loader-spinner"
+import FileBase64 from "react-file-base64"
+
 const Register = () => {
   const userInitialState = {
     firstName: "",
@@ -12,9 +14,10 @@ const Register = () => {
     email: "",
     password: "",
     confirmePassword: "",
+    userImage: "",
   }
   const [formData, setFormData] = useState(userInitialState)
-  const { firstName, lastName, email, password, confirmePassword } = formData
+  const { firstName, lastName, email, password, confirmePassword, userImage } = formData
   const { loading, error } = useSelector((state) => ({ ...state.auth }))
   // const [avoidToastPlus, set]
   // const reRegister = useRef(false)
@@ -33,9 +36,11 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (password !== confirmePassword) return toast.error("Password Should Match")
-    if (firstName && lastName && email && password && confirmePassword) {
+    if (firstName && lastName && email && password && confirmePassword && userImage) {
       dispatch(register({ formData, navigate, toast }))
       // reRegister.current = !reRegister.current
+    } else {
+      return toast.error("you need to fill all inputs")
     }
   }
 
@@ -49,6 +54,10 @@ const Register = () => {
           <input value={email} name="email" onChange={onInputChange} type="email" placeholder="Your Email" className="from-login-inputs" />
           <input value={password} name="password" onChange={onInputChange} type="password" placeholder="Your Password" className="from-login-inputs" />
           <input value={confirmePassword} name="confirmePassword" onChange={onInputChange} type="password" placeholder="Your confirmePassword" className="from-login-inputs" />
+          <div className="upload">
+            <p className="description"> your Image</p>
+            <FileBase64 type="file" multiple={false} onDone={({ base64 }) => setFormData({ ...formData, userImage: base64 })} />
+          </div>
           <button onClick={handleSubmit} className="form-login-login">
             {loading && <TailSpin color="#fff" height={26} width={26} />}
             Register
