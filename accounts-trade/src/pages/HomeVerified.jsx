@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Post from "../components/Post"
-import { getPosts } from "../redux/features/postSlice"
-
+import { getPosts, setCurrentPage } from "../redux/features/postSlice"
+import { io } from "socket.io-client"
 const HomeVerified = () => {
-  const { loading, posts } = useSelector((state) => ({ ...state.post }))
+  const { loading, posts, currentPage, numberOfPages } = useSelector((state) => ({ ...state.post }))
   const dispatch = useDispatch()
   const [type, setType] = useState("")
   const [allPosts, setAllPosts] = useState(posts)
-  useEffect(() => {
-    dispatch(getPosts())
-  }, [])
+  const socket = io("http://localhost:8000")
+
+  // socket.on("connect", () => {
+  //   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
+  // })
+
+  // socket.on("disconnect", () => {
+  //   console.log(socket.id) // undefined
+  // })
+  useLayoutEffect(() => {
+    dispatch(getPosts(currentPage))
+  }, [currentPage])
+
   useEffect(() => {
     if (type === "All Games") {
-      setAllPosts(posts.slice(0).reverse())
+      setAllPosts(posts.slice(0))
     } else {
-      setAllPosts(
-        posts
-          .slice(0)
-          .reverse()
-          .filter((e) => e.typeOfPost === type)
-      )
+      setAllPosts(posts.slice(0).filter((e) => e.typeOfPost === type))
     }
   }, [type])
   return (
@@ -42,22 +47,28 @@ const HomeVerified = () => {
           Ark Of War
         </option>
       </select>
-      {loading ? (
-        <div className="description"> ...Loading </div>
-      ) : (
-        <div>
-          {!type ? (
-            <div>
-              {posts &&
-                posts
-                  .slice(0)
-                  .reverse()
-                  .map((e, i) => <Post key={i} {...e} />)}
-            </div>
+      {loading ? <div className="description"> ...Loading </div> : <div>{!type ? <div>{posts && posts.slice(0).map((e, i) => <Post key={i} {...e} />)}</div> : <div>{posts && allPosts.map((e, i) => <Post key={i} {...e} />)}</div>} </div>}
+
+      {currentPage <= numberOfPages && currentPage >= 1 ? (
+        <div className="peni">
+          {!(currentPage > 1) ? (
+            <></>
           ) : (
-            <div>{posts && allPosts.map((e, i) => <Post key={i} {...e} />)}</div>
-          )}{" "}
+            <p onClick={() => dispatch(setCurrentPage(currentPage - 1))} className="description">
+              Prev
+            </p>
+          )}
+          <p className="description">{currentPage}</p>
+          {!(currentPage < numberOfPages) ? (
+            <></>
+          ) : (
+            <p onClick={() => dispatch(setCurrentPage(currentPage + 1))} className="description">
+              Next
+            </p>
+          )}
         </div>
+      ) : (
+        <></>
       )}
     </div>
   )

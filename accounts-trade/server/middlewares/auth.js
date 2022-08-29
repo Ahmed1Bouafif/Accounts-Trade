@@ -15,9 +15,13 @@ const auth = async (req, res, next) => {
       const user = await UserModel.findOne({ googleId })
       req.userId = user?._id
     }
-    next()
+    next && next()
   } catch (error) {
-    console.log(error)
+    // window.location.href = "/login"
+    // localStorage.clear()
+    // res.redirect({
+    //   pathname: "/login",
+    // })
   }
 }
 export default auth

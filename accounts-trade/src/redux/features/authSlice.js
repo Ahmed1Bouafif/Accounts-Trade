@@ -41,11 +41,11 @@ const authSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload
+      state.userConnected = action.payload
     },
     setLogout: (state, action, path) => {
       localStorage.clear()
-      state.user = null
+      state.userConnected = null
       path("/")
     },
   },

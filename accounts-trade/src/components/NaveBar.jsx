@@ -12,7 +12,7 @@ const NaveBar = ({ setCarrousel, carrousel }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [mobileNotiOpen, setMobileNotiOpen] = useState(false)
   const [mobilesearchiOpen, setMobilesearchOpen] = useState(false)
-  const { user } = useSelector((state) => ({ ...state.auth }))
+  const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const handelLogount = () => {
     dispatch(setLogout(navigate))
   }
@@ -21,11 +21,12 @@ const NaveBar = ({ setCarrousel, carrousel }) => {
       <img alt="Logo" className="logo" />
       <div className={`nav-items ${mobileNavOpen && "open"} `}>
         <a href="/">Home</a>
-        {user?.result?._id ? <></> : <a href="/register">Register</a>}
-        {user?.result?._id ? <a href="/AddPost">Add Post</a> : <></>}
-        {user?.result?._id ? <a href="/Chat">Chat</a> : <></>}
-        {user?.result?._id ? <a href={`/Profile/${user?.result?._id}`}>Profile</a> : <></>}
-        {user?.result?._id ? (
+        {userConnected?.result?._id ? <></> : <a href="/register">Register</a>}
+        {userConnected?.result?._id ? <a href="/AddPost">Add Post</a> : <></>}
+        {userConnected?.result?._id ? <a href={`/MyPosts/${userConnected?.result?._id}`}>My Posts</a> : <></>}
+        {userConnected?.result?._id ? <a href="/Chat">Chat</a> : <></>}
+        {userConnected?.result?._id ? <a href={`/Profile/${userConnected?.result?._id}`}>Profile</a> : <></>}
+        {userConnected?.result?._id ? (
           <a href="/" onClick={handelLogount}>
             Logout
           </a>
@@ -40,7 +41,7 @@ const NaveBar = ({ setCarrousel, carrousel }) => {
         <div className={`nav-notif  ${mobileNotiOpen && "open"} `}>
           <Notification />
         </div>
-        {user?.result?._id && (
+        {userConnected?.result?._id && (
           <div className="nav-toggle-notification">
             <FontAwesomeIcon
               size="lg"
@@ -54,7 +55,7 @@ const NaveBar = ({ setCarrousel, carrousel }) => {
             />
           </div>
         )}
-        {user?.result?._id && (
+        {userConnected?.result?._id && (
           <div className="nav-toggle-notification">
             <FontAwesomeIcon
               size="lg"

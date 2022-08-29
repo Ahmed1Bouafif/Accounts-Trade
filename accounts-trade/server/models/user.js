@@ -7,6 +7,8 @@ const userSchema = mongoose.Schema({
   userImage: { type: String, required: false },
   password: { type: String, required: false },
   googleId: { type: String, required: false },
+  sentFriendRequestes: [String],
+  receivedFriendRequestes: [String],
   friends: [String],
 })
 

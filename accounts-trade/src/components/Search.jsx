@@ -27,8 +27,8 @@ const Search = () => {
         <div>
           {allUsers &&
             allUsers.map((e, i) => (
-              <Link to={`/profile/${e._id}`}>
-                <div key={i} className="search-container">
+              <Link key={i} to={`/profile/${e._id}`}>
+                <div className="search-container">
                   <img className="notification-img" src={e.userImage} alt="userImage" />
                   <div className="notification-text">
                     <p>{e.userName}</p>

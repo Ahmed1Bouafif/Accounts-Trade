@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import FileBase64 from "react-file-base64"
 import { useDispatch, useSelector } from "react-redux"
 import { createPost } from "../redux/features/postSlice.js"
+import { TailSpin } from "react-loader-spinner"
 
 const AddPost = () => {
   const intialState = {
@@ -12,8 +13,8 @@ const AddPost = () => {
     description: "",
   }
   const [postData, setPostData] = useState(intialState)
-  const { error } = useSelector((state) => ({ ...state.post }))
-  const { user } = useSelector((state) => ({ ...state.auth }))
+  const { error, loading } = useSelector((state) => ({ ...state.post }))
+  const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const { typeOfPost, title, description } = postData
 
   const dispatch = useDispatch()
@@ -23,8 +24,8 @@ const AddPost = () => {
     error && toast.error(error)
   }, [error])
 
-  console.log(postData)
-  console.log(user?.result?.userName)
+  // console.log(postData)
+  // console.log(user?.result?.userName)
 
   const onInputChange = (e) => {
     const { name, value } = e.target
@@ -36,7 +37,7 @@ const AddPost = () => {
   const onHandelSubmit = (e) => {
     e.preventDefault()
     if (title && description) {
-      const updatedPost = { ...postData, name: user?.result?.userName, posterImage: user?.result?.userImage }
+      const updatedPost = { ...postData, name: userConnected?.result?.userName, posterImage: userConnected?.result?.userImage }
       dispatch(createPost({ updatedPost, navigate, toast }))
       // onClear()
     }
@@ -76,6 +77,7 @@ const AddPost = () => {
         </div>
         <button onClick={onHandelSubmit} className="form-login-login post-ok">
           {" "}
+          {loading && <TailSpin color="#fff" height={26} width={26} />}
           Submit
         </button>
         <button onClick={onClear} className="form-login-login clear-post">

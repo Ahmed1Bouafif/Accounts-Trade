@@ -416,6 +416,7 @@ body {
 .homepage-container {
   margin-top: 100px;
   margin-inline: 7%;
+  min-height: 55vh;
 }
 
 .description {
@@ -944,7 +945,7 @@ input:checked + .slide-container .nav label {
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 15%;
   }
@@ -1128,10 +1129,35 @@ input:checked + .slide-container .nav label {
     background-color: #292a2a;
     height: 8vh;
   }
+  .requests {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    gap: 1rem;
+  }
 }
-
-.requests{
+.requests {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* width: 100%; */
+}
+
+.wait {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.peni {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.likespeople {
+  color: #d81811;
+  margin: 0.2rem;
+  font-size: small;
 }
