@@ -8,7 +8,9 @@ const HomeVerified = () => {
   const dispatch = useDispatch()
   const [type, setType] = useState("")
   const [allPosts, setAllPosts] = useState(posts)
-  const socket = io("http://localhost:8000")
+  useEffect(() => {
+    const socket = io("http://localhost:8000")
+  }, [])
 
   // socket.on("connect", () => {
   //   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
@@ -27,7 +29,7 @@ const HomeVerified = () => {
     } else {
       setAllPosts(posts.slice(0).filter((e) => e.typeOfPost === type))
     }
-  }, [type])
+  }, [type, posts])
   return (
     <div className="homepage-container pickgame">
       <select name="allgames" onChange={(e) => setType(e.target.value)} className="allgames">

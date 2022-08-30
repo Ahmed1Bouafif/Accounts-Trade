@@ -118,7 +118,8 @@ const postSlice = createSlice({
         arg: { _id },
       } = action.meta
       if (_id) {
-        state.posts = state.posts.map((item) => (item._id === _id ? action.payload : item))
+        console.log("haha", action.payload)
+        state.posts = state.posts.map((item) => (item._id === _id ? action.payload.updatesPost : item))
       }
       state.userPosts = state.userPosts.filter((item) => item._id !== action.payload.posts[0]._id)
     },
