@@ -12,6 +12,8 @@ import Profile from "./pages/Profile.jsx"
 import Chat from "./components/Chat.jsx"
 import AddPost from "./pages/AddPost.jsx"
 import MyPosts from "./pages/MyPosts.jsx"
+import OnePost from "./pages/OnePost.jsx"
+import { SocketProvider } from "./Socket/SocketState.js"
 const App = () => {
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem("userProfile"))
@@ -25,20 +27,24 @@ const App = () => {
   return (
     <BrowserRouter>
       <ToastContainer />
+
       <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          <Route element={<AuthWrapper />}>
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/AddPost" element={<AddPost />} />
-            <Route path="/MyPosts/:id" element={<MyPosts />} />
-            <Route path="/EditPost/:id" element={<AddPost />} />
-          </Route>
-        </Routes>
+        <SocketProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            {/* <Route element={<SocketProvider />}></Route> */}
+            <Route path="/" element={<Home />} />
+            <Route element={<AuthWrapper />}>
+              <Route path="/profile/:id" element={<Profile />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/AddPost" element={<AddPost />} />
+              <Route path="/MyPosts/:id" element={<MyPosts />} />
+              <Route path="/OnePost/:id" element={<OnePost />} />
+            </Route>
+          </Routes>
+        </SocketProvider>
       </div>
     </BrowserRouter>
   )

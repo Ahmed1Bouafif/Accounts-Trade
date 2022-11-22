@@ -2,15 +2,29 @@ import React, { useEffect, useState, useLayoutEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Post from "../components/Post"
 import { getPosts, setCurrentPage } from "../redux/features/postSlice"
-import { io } from "socket.io-client"
+// import { io } from "socket.io-client"
+import { Circles } from "react-loader-spinner"
+import { getUserNotifs } from "../redux/features/usersSlice"
+// import { useRef } from "react"
 const HomeVerified = () => {
   const { loading, posts, currentPage, numberOfPages } = useSelector((state) => ({ ...state.post }))
+  const { userConnected } = useSelector((state) => ({ ...state.auth }))
+
   const dispatch = useDispatch()
-  const [type, setType] = useState("")
-  const [allPosts, setAllPosts] = useState(posts)
-  useEffect(() => {
-    const socket = io("http://localhost:8000")
-  }, [])
+  const [type, setType] = useState("All Games")
+  const [allPosts, setAllPosts] = useState([])
+  const [id, setId] = useState(userConnected?.result?._id)
+  // const [socket, setSocket] = useState(null)
+  // const ref = useRef(null)
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:8000"))
+  // }, [])
+  // useEffect(() => {
+  //   socket?.emit("newUserOnline", userConnected?.result)
+  //   // socket?.on("works", function (data) {
+  //   //   console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeey", data)
+  //   // })
+  // }, [socket, userConnected?.result])
 
   // socket.on("connect", () => {
   //   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
@@ -20,9 +34,14 @@ const HomeVerified = () => {
   //   console.log(socket.id) // undefined
   // })
   useLayoutEffect(() => {
+    setId(userConnected?.result?._id)
+  }, [userConnected?.result?._id])
+  useLayoutEffect(() => {
     dispatch(getPosts(currentPage))
-  }, [currentPage])
-
+    dispatch(getUserNotifs({ id }))
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    // console.log("done")
+  }, [currentPage, id, dispatch])
   useEffect(() => {
     if (type === "All Games") {
       setAllPosts(posts.slice(0))
@@ -49,7 +68,13 @@ const HomeVerified = () => {
           Ark Of War
         </option>
       </select>
-      {loading ? <div className="description"> ...Loading </div> : <div>{!type ? <div>{posts && posts.slice(0).map((e, i) => <Post key={i} {...e} />)}</div> : <div>{posts && allPosts.map((e, i) => <Post key={i} {...e} />)}</div>} </div>}
+      {loading ? (
+        <div className="wait">
+          <Circles color="#ff0000" height={80} width={80} />
+        </div>
+      ) : (
+        <div>{!type ? <div>{allPosts.length && allPosts.slice(0).map((e, i) => <Post key={i} {...e} />)}</div> : <div>{allPosts.length && allPosts.map((e, i) => <Post key={i} {...e} />)}</div>} </div>
+      )}
 
       {currentPage <= numberOfPages && currentPage >= 1 ? (
         <div className="peni">

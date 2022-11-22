@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useLayoutEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -7,10 +8,16 @@ import { addFriend, acceptFriend, cancelAddFriend, changeUserName } from "../red
 import { getUser } from "../redux/features/usersSlice"
 import { Circles } from "react-loader-spinner"
 import { TailSpin } from "react-loader-spinner"
-
+import { getPosts } from "../redux/features/postSlice"
+// import { io } from "socket.io-client"
+// import useSocket from "../Socket/SocketState"
 const Profile = () => {
   const { user, loading } = useSelector((state) => ({ ...state.users }))
+  const { posts } = useSelector((state) => ({ ...state.post }))
+  // const { sendRequest } = useSocket()
   const connectedUser = JSON.parse(localStorage.getItem("userProfile"))
+  // const { thatNotii } = useSelector((state) => ({ ...state.users }))
+
   // const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -18,6 +25,31 @@ const Profile = () => {
   const [_id, setIs] = useState()
   const [userData, setUserData] = useState()
   const [userName, setNewName] = useState()
+  // const [socket, setSocket] = useState(null)
+  // const [noti, setNoti] = useState(null)
+  const [postNum, setPostNum] = useState()
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:8000"))
+  // }, [])
+
+  useLayoutEffect(() => {
+    if (id) {
+      dispatch(getUser(id))
+    }
+    dispatch(getPosts())
+    // setNoti(thatNotii)
+    // if (user.receivedFriendRequestes) {
+    //   if (user.receivedFriendRequestes.includes(_id)) {
+    //     setRequestSent(true)
+    //   }
+    // }
+  }, [id, dispatch])
+
+  // useEffect(() => {
+  //   if (noti?.type) {
+  //     sendRequest(noti)
+  //   }
+  // }, [noti])
   // const [requestSent, setRequestSent] = useState(false)
   // const [profile, setProfile] = useState()
   // useEffect(() => {
@@ -27,16 +59,16 @@ const Profile = () => {
   // }, [sentFriendsResquests, id])
   // console.log("hahahahhahahahahahahhahahahahahaha", sentFriendsResquests)
   // console.log(id)
-  useLayoutEffect(() => {
-    if (id) {
-      dispatch(getUser(id))
-    }
-    // if (user.receivedFriendRequestes) {
-    //   if (user.receivedFriendRequestes.includes(_id)) {
-    //     setRequestSent(true)
-    //   }
-    // }
-  }, [id, dispatch])
+  useEffect(() => {
+    var num = 0
+    // eslint-disable-next-line array-callback-return
+    posts.map((u) => {
+      if (u.creator === id) {
+        num += 1
+      }
+    })
+    setPostNum(num)
+  }, [posts])
   useEffect(() => {
     if (connectedUser.result._id) {
       setIs(connectedUser.result._id)
@@ -67,7 +99,7 @@ const Profile = () => {
         <Circles color="#ff0000" className="wait" height={80} width={80} />
       ) : (
         <>
-          {userData && (
+          {userData && connectedUser.result._id && (
             <>
               <span className="Go-Back" onClick={() => navigate(-1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -129,7 +161,7 @@ const Profile = () => {
                         <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />{" "}
                       </svg>
                     </span>{" "}
-                    posts: 2
+                    posts: {posts.length ? postNum : <TailSpin color="#fff" height={26} width={26} />}
                   </div>
                 </div>
                 {user._id === connectedUser.result._id && (

@@ -17,7 +17,6 @@ const Search = () => {
       setAllUsers(users.slice(0).filter((e) => e.userName.includes(serach)))
     }
   }, [serach])
-  console.log(users)
   return (
     <div>
       <input name="Search" type="Search" value={serach} onChange={(e) => setSearch(e.target.value)} placeholder="Search" className="from-login-inputs search-input" />

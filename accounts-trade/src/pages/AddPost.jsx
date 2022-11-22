@@ -35,16 +35,20 @@ const AddPost = () => {
     setPostData({ typeOfPost: "", title: "", description: "" })
   }
   const onHandelSubmit = (e) => {
-    e.preventDefault()
-    if (title && description) {
-      const updatedPost = { ...postData, name: userConnected?.result?.userName, posterImage: userConnected?.result?.userImage }
-      dispatch(createPost({ updatedPost, navigate, toast }))
-      // onClear()
+    if (title.length > 20) {
+      return toast.error("title should be less than 20 carachter")
+    } else {
+      e.preventDefault()
+      if (title && description) {
+        const updatedPost = { ...postData, name: userConnected?.result?.userName, posterImage: userConnected?.result?.userImage }
+        dispatch(createPost({ updatedPost, navigate, toast }))
+        // onClear()
+      }
     }
   }
 
   return (
-    <div className="ProfileContainer">
+    <div className="Addontainer">
       <span className="Go-Back" onClick={() => navigate(-1)}>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
           {" "}

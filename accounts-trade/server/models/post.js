@@ -17,6 +17,7 @@ const postSchema = mongoose.Schema({
     type: [String],
     default: [],
   },
+  comments: [],
 })
 
 export default mongoose.model("post", postSchema)

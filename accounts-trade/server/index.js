@@ -5,6 +5,9 @@ import userRouter from "./routes/user.js"
 import postRouter from "./routes/post.js"
 import bodyParser from "body-parser"
 import { Server } from "socket.io"
+import { PostLike } from "./controllers/post.js"
+// import { PostLike } from "./controllers/post.js"
+import { init } from "./socket-io.js"
 const app = express()
 app.use(bodyParser.json({ limit: "200mb" }))
 app.use(bodyParser.urlencoded({ limit: "200mb", extended: true }))
@@ -26,14 +29,73 @@ mongoose
   .catch((err) => {
     console.log(`${err} did not connect`)
   })
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-})
+export const io = init(server)
+// console.log("=============== hhhhhhhhhhhhhhhhhhhhhh", io)
 
+let onlineUsers = []
+// let notifications = []
+const addOnlineUser = (uid, sid) => {
+  if (!onlineUsers.some(({ userId }) => userId === uid)) {
+    onlineUsers.push({ userId: uid, socketId: sid })
+  } else {
+    let index
+    if (
+      onlineUsers.some(({ userId, socketId }, idx) => {
+        if (userId === uid && socketId !== sid) {
+          index = idx
+          return true
+        } else return false
+      })
+    ) {
+      onlineUsers[index].socketId = sid
+    }
+  }
+}
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId)
+}
+const getUser = (id) => {
+  return onlineUsers.find((user) => user.userId === id)
+}
 io.on("connection", (socket) => {
-  console.log(socket.id)
-})
+  // console.log("some one connected")
+  socket.on("newUserOnline", (uid) => {
+    addOnlineUser(uid, socket.id)
+    socket.emit("online_users", onlineUsers)
+    console.log("=============Q ", onlineUsers)
+  })
+  // socket.on("send-like", function (data) {
+  //   console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
+  //   const target = getUser(data?.poster)
+  //   const targetTokent = target?.socketId || null
+  //   // notifications = [...new Set([...notifications, data])]
+  //   // notifications.push(data)
+  //   // console.log([...new Set(notifications)])
+  //   socket.to(targetTokent).emit("receive-like", data)
+  //   console.log("fuuuuuuck", target)
+  // })
+  socket.on("send_comment", function (data) {
+    console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
+    const target = getUser(data?.poster)
+    const targetTokent = target?.socketId || null
+    // notifications.push(data)
+    socket.to(targetTokent).emit("receive_comment", data)
+    console.log("fuuuuuuck", target)
+  })
+  socket.on("send_request", function (data) {
+    const target = getUser(data?.poster)
+    const targetTokent = target?.socketId || null
+    // notifications.push(data)
+    socket.to(targetTokent).emit("receive_request", data)
+    console.log("fuuuuuuck", target)
+  })
 
+  socket.on("disconnect", (socket) => {
+    removeUser(socket.id)
+    // socket.removeAllListeners()
+    console.log("oh he left")
+  })
+})
+const socketIoObject = io
+export default socketIoObject
 // socket
