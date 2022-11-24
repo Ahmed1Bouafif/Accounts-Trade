@@ -12,7 +12,10 @@ const Notification = ({ notificationss, setMobileNotiOpen }) => {
   // const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const [notificationsss, setNotifications] = useState()
   useEffect(() => {
-    setNotifications(notificationss)
+    let time = []
+    notificationss && notificationss.map((u) => time.unshift(u))
+
+    setNotifications(time)
   }, [notificationss])
   // useEffect(() => {
   //   var noti = [thatNoti]

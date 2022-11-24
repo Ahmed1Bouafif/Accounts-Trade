@@ -629,16 +629,86 @@ body {
   right: 0;
   z-index: 3;
 }
+.descriptionx {
+  font-family: "Rampart One", cursive;
+  font-family: "Reggae One", cursive;
+  font-weight: bold;
+  color: #d81811;
+  font-size: x-large;
+  margin: 3px;
+}
+.OtherPart {
+  width: 100%;
+  height: 70vh;
+  border: #fff 10px solid;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+.chathead {
+  height: 7vh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  align-items: center;
+  border-bottom: #292a2a 2px solid;
+}
+.chatin {
+  width: 70%;
+}
+.msgSend {
+  background-color: aliceblue;
+  color: #292a2a;
+  padding: 5px 10px;
+  max-width: 30vw;
+  border-radius: 0px 20px 20px 20px;
+  /* position: absolute; */
+  /* right: 1rem; */
+}
+.msgReceived {
+  background-color: #292a2a;
+  color: aliceblue;
+  padding: 5px 10px;
+  max-width: 30vw;
+  border-radius: 20px 0px 20px 20px;
+  margin-left: auto;
+  margin-right: 20px;
+  /* position: absolute; */
 
+  /* left: 1rem; */
+}
+.chatmain {
+  position: relative;
+  height: 56vh;
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.chatsen {
+  width: 5vw;
+}
+.chatbottom {
+  height: 7vh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: #292a2a 2px solid;
+  gap: 2rem;
+}
 @media (max-width: 768px) {
   .footerDetails {
     width: 90%;
     text-align: start;
   }
-
-  .description {
-    font-size: x-large;
-    margin: 3px;
+  .OtherPart {
+    display: none;
   }
   .real-people {
     display: flex;
@@ -1187,6 +1257,48 @@ input:checked + .slide-container .nav label {
     width: 500px;
     gap: 1rem;
   }
+  .ChatContainer {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    gap: 0.5rem;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 5;
+  }
+  .chatUsers {
+    max-width: 39vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 10;
+  }
+}
+.ChatContainer {
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
+  gap: 0.5rem;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+.chatUsers {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 10;
 }
 .requests {
   display: flex;
@@ -1263,18 +1375,6 @@ input:checked + .slide-container .nav label {
   overflow-y: scroll;
 }
 
-.ChatContainer {
-  width: 100%;
-  height: 100vh;
-  overflow-y: scroll;
-  gap: 0.5rem;
-  margin-top: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  z-index: 5;
-}
 .ownerC {
   width: 95%;
   display: flex;

@@ -19,7 +19,7 @@ const Comments = () => {
   const dispatch = useDispatch()
   const { id } = useParams()
   const [_id, setIs] = useState()
-  const [comments, setcomments] = useState()
+  const [comments, setcomments] = useState(post.comments)
   const [commentt, setcom] = useState("")
   // const [socket, setSocket] = useState(null)
   // const [noti, setNoti] = useState(null)
@@ -39,14 +39,17 @@ const Comments = () => {
   const addComment = () => {
     if (commentt.trim() !== "") {
       dispatch(comment({ id, commentt, _id }))
+      setcomments([...comments, { commnterName: { n: connectedUser.result.userName, i: connectedUser.result.userImage }, commenter: connectedUser.result._id, comment: commentt, sendAt: new Date(), likes: [] }])
       setcom("")
     } else {
       toast.error("please complete your comment")
     }
   }
   useLayoutEffect(() => {
-    setcomments(post.comments)
-  }, [post.comments])
+    if (comments?.length === post?.comments?.length) {
+      setcomments(post.comments)
+    }
+  }, [post.comments, comments])
   useEffect(() => {
     if (connectedUser.result._id) {
       setIs(connectedUser.result._id)

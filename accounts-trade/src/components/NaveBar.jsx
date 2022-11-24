@@ -27,7 +27,7 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
   const { usernotifications } = useSelector((state) => ({ ...state.users }))
   // const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const [notificationss, setNotifications] = useState([])
-  const [notificationsss, setNotificationss] = useState([])
+  // const [notificationsss, setNotificationss] = useState([])
   const [nLike, setnl] = useState({})
   const [nComment, setnc] = useState({})
   const [nAdd, setna] = useState({})
@@ -69,31 +69,37 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
     // receiveComment()
     // receiveRequest()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket])
-  useEffect(() => {
+  }, [socket, receiveLike, receiveComment, receiveRequest])
+  useLayoutEffect(() => {
     if (nLike.type === "like") {
-      if (notifications?.length < 1) {
-        setNotifications([...usernotifications, nLike])
-        setnl({})
-      } else {
-        setNotifications([...notifications, nLike])
-        setnl({})
+      if (nLike.liker.id !== userConnected?.result?._id && nLike.poster === userConnected?.result?._id) {
+        if (notifications?.length < 1) {
+          setNotifications([...usernotifications, nLike])
+          setnl({})
+        } else {
+          setNotifications([...notifications, nLike])
+          setnl({})
+        }
       }
     } else if (nComment.type === "comment") {
-      if (notifications?.length < 1) {
-        setNotifications([...usernotifications, nComment])
-        setnc({})
-      } else {
-        setNotifications([...notifications, nComment])
-        setnc({})
+      if (nComment.commenter.id !== userConnected?.result?._id && nComment.poster === userConnected?.result?._id) {
+        if (notifications?.length < 1) {
+          setNotifications([...usernotifications, nComment])
+          setnc({})
+        } else {
+          setNotifications([...notifications, nComment])
+          setnc({})
+        }
       }
     } else if (nAdd.type === "sendRequest") {
-      if (notifications?.length < 1) {
-        setNotifications([...usernotifications, nAdd])
-        setna({})
-      } else {
-        setNotifications([...notifications, nAdd])
-        setna({})
+      if (nAdd.sender.id !== userConnected?.result?._id && nAdd.receiver === userConnected?.result?._id) {
+        if (notifications?.length < 1) {
+          setNotifications([...usernotifications, nAdd])
+          setna({})
+        } else {
+          setNotifications([...notifications, nAdd])
+          setna({})
+        }
       }
     } else if (notifications?.length < 1 && notificationss.length < 1) {
       setNotifications(usernotifications)
@@ -108,77 +114,77 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
   //   // setNumberNotifs(numberNotifn + 1)
   // }, [noti])
 
+  // useEffect(() => {
+  // notifications.map((u) => noti.push(u))1
+  // notifications &&
+  //   notifications.map((u) => {
+  //     if ((noti.postId === u.postId && noti.liker === u.liker) || (noti.postId === u.postId && noti.commenter === u.commenter) || (noti.receiver === u.receiver && noti.sender === u.sender)) {
+  //       notii.unshift(u)
+  //     }
+  //   })
+  // if (notii) {
+  //   noti.push(notii)
+  // }
+
+  // else if (thatNotii) {
+  //   noti.push(thatNotii)
+  // } else {
+  //   noti.push(thatNoti)
+  // }
+  // console.log("=============>", noti)
+  // var result = noti.reduce((unique, o) => {
+  //   console.log(".", o)
+  //   console.log("..", unique)
+
+  //   if (!unique.some((obj) => (obj.postId === o.postId && obj.liker === o.liker && obj.poster === o.poster && obj.sendAt === o.sendAt) || (obj.receiver === o.receiver && obj.sender === o.sender) || (obj.commenter === o.commenter && obj.sendAt === o.sendAt))) {
+  //     unique.push(o)
+  //   }
+  //   return unique
+  // }, [])
+  // console.log("=============>>>>>", result)
+
+  // console.log(result)
+  //   const filter = (ok) => {
+  //     var lala = []
+  //     // console.log(notificationss)
+  //     // eslint-disable-next-line array-callback-return
+  //     ok.map((u) => {
+  //       if (u.type === "like") {
+  //         if (u.liker.id !== userConnected?.result?._id && u.poster === userConnected?.result?._id) {
+  //           lala.push(u)
+  //         }
+  //       } else if (u.type === "comment") {
+  //         if (u.commenter.id !== userConnected?.result?._id && u.poster === userConnected?.result?._id) {
+  //           lala.push(u)
+  //         }
+  //       } else if (u.type === "sendRequest") {
+  //         if (u.sender.id !== userConnected?.result?._id && u.receiver === userConnected?.result?._id) {
+  //           lala.push(u)
+  //         }
+  //       }
+  //     })
+  //     // var result = lala.reduce((unique, o) => {
+  //     //   if (!unique.some((obj) => (obj.postId === o.postId && obj.liker === o.liker && obj.poster === o.poster && obj.sendAt === o.sendAt) || (obj.receiver === o.receiver && obj.sender === o.sender) || (obj.commenter === o.commenter && obj.sendAt === o.sendAt))) {
+  //     //     unique.push(o)
+  //     //   }
+  //     //   return unique
+  //     // }, [])
+  //     console.log(lala)
+  //     return lala.reverse()
+  //   }
+  //   // var filtered = noti.filter((u) => u.liker !== userConnected?.result?._id || u.commenter !== userConnected?.result?._id || u.sender !== userConnected?.result?._id)
+  //   setNotificationss(filter(notificationss))
+
+  //   // console.log("hahahahahahhahahadfhsdfhsdfh", filtered)
+  //   // console.log("hahahahahahhahaha", noti)
+  //   // notifications,
+  // }, [userConnected?.result?._id, notificationss, notifications, usernotifications])
+
   useEffect(() => {
-    // notifications.map((u) => noti.push(u))1
-    // notifications &&
-    //   notifications.map((u) => {
-    //     if ((noti.postId === u.postId && noti.liker === u.liker) || (noti.postId === u.postId && noti.commenter === u.commenter) || (noti.receiver === u.receiver && noti.sender === u.sender)) {
-    //       notii.unshift(u)
-    //     }
-    //   })
-    // if (notii) {
-    //   noti.push(notii)
-    // }
-
-    // else if (thatNotii) {
-    //   noti.push(thatNotii)
-    // } else {
-    //   noti.push(thatNoti)
-    // }
-    // console.log("=============>", noti)
-    // var result = noti.reduce((unique, o) => {
-    //   console.log(".", o)
-    //   console.log("..", unique)
-
-    //   if (!unique.some((obj) => (obj.postId === o.postId && obj.liker === o.liker && obj.poster === o.poster && obj.sendAt === o.sendAt) || (obj.receiver === o.receiver && obj.sender === o.sender) || (obj.commenter === o.commenter && obj.sendAt === o.sendAt))) {
-    //     unique.push(o)
-    //   }
-    //   return unique
-    // }, [])
-    // console.log("=============>>>>>", result)
-
-    // console.log(result)
-    const filter = (ok) => {
-      var lala = []
-      // console.log(notificationss)
-      // eslint-disable-next-line array-callback-return
-      ok.map((u) => {
-        if (u.type === "like") {
-          if (u.liker.id !== userConnected?.result?._id && u.poster === userConnected?.result?._id) {
-            lala.push(u)
-          }
-        } else if (u.type === "comment") {
-          if (u.commenter.id !== userConnected?.result?._id && u.poster === userConnected?.result?._id) {
-            lala.push(u)
-          }
-        } else if (u.type === "sendRequest") {
-          if (u.sender.id !== userConnected?.result?._id && u.receiver === userConnected?.result?._id) {
-            lala.push(u)
-          }
-        }
-      })
-      // var result = lala.reduce((unique, o) => {
-      //   if (!unique.some((obj) => (obj.postId === o.postId && obj.liker === o.liker && obj.poster === o.poster && obj.sendAt === o.sendAt) || (obj.receiver === o.receiver && obj.sender === o.sender) || (obj.commenter === o.commenter && obj.sendAt === o.sendAt))) {
-      //     unique.push(o)
-      //   }
-      //   return unique
-      // }, [])
-      console.log(lala)
-      return lala.reverse()
-    }
-    // var filtered = noti.filter((u) => u.liker !== userConnected?.result?._id || u.commenter !== userConnected?.result?._id || u.sender !== userConnected?.result?._id)
-    setNotificationss(filter(notificationss))
-
-    // console.log("hahahahahahhahahadfhsdfhsdfh", filtered)
-    // console.log("hahahahahahhahaha", noti)
-    // notifications,
-  }, [userConnected?.result?._id, notificationss, notifications, usernotifications])
-
-  useEffect(() => {
-    if (notificationsss) {
+    if (notificationss) {
       var notii = 0
-      notificationsss.map((u) => (u.seen === false ? notii++ : notii))
-      // console.log(notificationsss.length)
+      notificationss.map((u) => (u.seen === false ? notii++ : notii))
+      // console.log(notificationss.length)
       // if (notifications) {
       //   console.log(notificationss.length)
       //   console.log(notifications.length)
@@ -189,7 +195,7 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
       // console.log(thatNoti)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notificationsss])
+  }, [notificationss])
   // useEffect(() => {
   //   setN(notificationss)
   //   console.log("3", notificationss)
@@ -224,7 +230,7 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
           <Search />
         </div>
         <div className={`nav-notif  ${mobileNotiOpen && "open"} `}>
-          <Notification setMobileNotiOpen={setMobileNotiOpen} notificationss={notificationsss} />
+          <Notification setMobileNotiOpen={setMobileNotiOpen} notificationss={notificationss} />
         </div>
         {userConnected?.result?._id && (
           <div
