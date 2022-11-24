@@ -14,6 +14,9 @@ import AddPost from "./pages/AddPost.jsx"
 import MyPosts from "./pages/MyPosts.jsx"
 import OnePost from "./pages/OnePost.jsx"
 import { SocketProvider } from "./Socket/SocketState.js"
+// import PcSideChat from "./components/PcSideChat.jsx"
+// import PcSideChatNo from "./components/PcSideChatNo.jsx"
+
 const App = () => {
   const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem("userProfile"))
@@ -38,7 +41,12 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route element={<AuthWrapper />}>
               <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat" element={<Chat />}>
+                {/* <div className="ChatContainer"> */}
+                {/* <Route path="" element={<PcSideChat />} /> */}
+                {/* <Route path=":id" element={<PcSideChatNo />} /> */}
+                {/* </div> */}
+              </Route>
               <Route path="/AddPost" element={<AddPost />} />
               <Route path="/MyPosts/:id" element={<MyPosts />} />
               <Route path="/OnePost/:id" element={<OnePost />} />

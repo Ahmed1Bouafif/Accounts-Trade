@@ -1,14 +1,17 @@
 import React from "react"
 // import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
-const OneChatUser = () => {
+const OneChatUser = ({ setThereIsOpenChat, user }) => {
   //   const navigate = useNavigate()
+  const { userConnected } = useSelector((state) => ({ ...state.auth }))
+
   return (
-    <div className="ownerC">
+    <div onClick={() => setThereIsOpenChat()} className="ownerC">
       <div className="imgN">
-        <img className="ownerimgC" src="A.png" alt="" />
+        <img className="ownerimgC" src={user?.userImage} alt="" />
         <div className="flexCol">
-          <p className="descriptionx">wael Ajjabi</p>
+          <p className="descriptionx">{userConnected.result._id === user?._id ? "Me (save ur stuff xD)" : user?.userName}</p>
           <p>this is the last message</p>
         </div>
       </div>

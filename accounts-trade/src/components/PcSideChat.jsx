@@ -24,8 +24,8 @@ const PcSideChat = () => {
         <MsgReceived />
         <MsgSend />
         <MsgSend />
-        <div ref={scroll}></div>
       </div>
+      <div ref={scroll}></div>
       <div className="chatbottom">
         <input className="from-login-inputs chatin" placeholder="qzsdfqsdfqsdf" type="text" />
         <button className="form-login-login chatsen">send</button>
