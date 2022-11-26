@@ -3,7 +3,7 @@ import MsgSend from "./MsgSend"
 import MsgReceived from "./MsgReceived"
 import { useRef } from "react"
 import { useEffect } from "react"
-const PcSideChat = () => {
+const PcSideChat = ({ user }) => {
   const scroll = useRef(null)
   useEffect(() => {
     scroll.current?.scrollIntoView()
@@ -11,8 +11,8 @@ const PcSideChat = () => {
   return (
     <div className="OtherPart ">
       <div className="chathead">
-        <img className="ownerimg" src="A.png" alt="" />
-        <p className="descriptionx">qsdf qDFQDF</p>
+        <img className="ownerimg" src={user?.userImage} alt="" />
+        <p className="descriptionx">{user?.userName}</p>
       </div>
       <div className="chatmain">
         <MsgSend />

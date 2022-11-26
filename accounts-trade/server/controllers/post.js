@@ -95,7 +95,7 @@ export const PostLike = async (req, res) => {
     let bob = { type: "like", postId: id, liker: { id: req.userId, name: likerr.userName, image: likerr.userImage }, poster: post.creator, sendAt: new Date(), seen: false, opened: false }
     if (postCreator.notifications.findIndex((user) => String(user?.liker?.id) === String(req.userId)) === -1 || postCreator.notifications.findIndex((user) => String(user?.postId + user?.liker?.id) === String(id + req.userId)) === -1) {
       postCreator.notifications.push(bob)
-      socketIoObject.emit("receive-like", bob)
+      socketIoObject.sockets.emit("receive-like", bob)
       console.log("goo", bob)
     }
     // getIO().on("send-like", () => {
@@ -137,7 +137,7 @@ export const comment = async (req, res) => {
     let bob = { type: "comment", postId: id, commenter: { id: Object.values(req.body)[1], name: commenterr.userName, image: commenterr.userImage }, poster: post.creator, sendAt: new Date(), seen: false, opened: false }
     if (postCreator.notifications.findIndex((user) => String(user?.commenter?.id) === String(Object.values(req.body)[1])) === -1 || postCreator.notifications.findIndex((user) => String(user?.postId + user?.commenter?.id) === String(id + Object.values(req.body)[1])) === -1) {
       postCreator.notifications.push(bob)
-      socketIoObject.emit("receive-comment", bob)
+      socketIoObject.sockets.emit("receive-comment", bob)
       console.log("goo", bob)
     }
     const sendNofit = await UserModal.findByIdAndUpdate(post.creator, postCreator, { new: true })

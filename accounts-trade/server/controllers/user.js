@@ -173,7 +173,7 @@ export const addFriend = async (req, res) => {
     let bob = { type: "sendRequest", receiver: id, sender: { id: Object.keys(req.body)[0], name: userSender.userName, image: userSender.userImage }, sendAt: new Date(), seen: false, opened: false }
     if (userReceiver.notifications.findIndex((user) => String(user?.sender?.id) === id) === -1 || userReceiver.notifications.findIndex((user) => String(user?.receiver + user?.sender?.id) === String(id + Object.keys(req.body)[0])) === -1) {
       userReceiver.notifications.push(bob)
-      socketIoObject.emit("receive-request", bob)
+      socketIoObject.sockets.emit("receive-request", bob)
       console.log("goo", bob)
     }
     // userReceiver.notifications.push(bob)
@@ -231,9 +231,9 @@ export const acceptFriend = async (req, res) => {
     userReceiver.receivedFriendRequestes = [...userReceiver.receivedFriendRequestes.slice(0, userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0])), ...userReceiver.receivedFriendRequestes.slice(userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0]) + 1, userReceiver.receivedFriendRequestes.length)]
     userSender.sentFriendRequestes = [...userSender.sentFriendRequestes.slice(0, userSender.sentFriendRequestes.indexOf(id)), ...userSender.sentFriendRequestes.slice(userSender.sentFriendRequestes.indexOf(id) + 1, userSender.sentFriendRequestes.length)]
     userReceiver.friends = [...userReceiver.friends, RId]
-    userReceiver.chat = [...userReceiver.chat, { id: RId, msgs: [] }]
+    userReceiver.chat[RId] = []
     userSender.friends = [...userReceiver.friends, id]
-    userSender.chat = [...userSender.chat, { id: id, msgs: [] }]
+    userSender.chat[id] = []
 
     await UserModal.findByIdAndUpdate(id, userReceiver, { new: true })
     await UserModal.findByIdAndUpdate(RId, userSender, { new: true })

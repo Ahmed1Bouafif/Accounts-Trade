@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import SocketContext from "./SocketContext.js"
 import { io } from "socket.io-client"
-import { useSelector } from "react-redux"
+// import { useSelector } from "react-redux"
+// import { useLayoutEffect } from "react"
 // import { useLayoutEffect } from "react"
 const Url = "http://localhost:8000"
 export const SocketProvider = ({ children }) => {
-  const { userConnected } = useSelector((state) => ({ ...state.auth }))
+  // const { userConnected } = useSelector((state) => ({ ...state.auth }))
+  const connectedUserr = JSON.parse(localStorage.getItem("userProfile"))
+
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(
     io(Url, {
@@ -19,31 +22,43 @@ export const SocketProvider = ({ children }) => {
   //     })
   //   )
   // }, [])
-
+  // const [ongline, setOnligne] = useState()
   const connectedUser = (uid) => {
     socket.emit("newUserOnline", uid)
   }
+
+  let notificationss = []
+  const [id, setid] = useState()
+  // useLayoutEffect(() => {
+  //   setid(userConnected?.result?._id)
+  // }, [userConnected?.result?._id])
+
+  useEffect(() => {
+    // if (connectedUserr.result._id) {
+    socket.on("connect", () => {
+      console.log("user connected")
+      console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeere", connectedUserr.result._id)
+      connectedUser(connectedUserr.result._id)
+      socket.on("online_users", (callback) => setid(callback))
+    })
+    return () => {
+      console.log("====>", socket)
+      socket.on("online_users", (callback) => setid(callback))
+      socket.off()
+      socket.disconnect()
+      // socket.removeAllListeners()
+    }
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket])
+  // useEffect(() => {
+  //   getOnlineUsers()
   const getOnlineUsers = (callback) => {
     socket.on("online_users", callback)
   }
-
-  let notificationss = []
-  useEffect(() => {
-    if (userConnected?.result?._id) {
-      socket.on("connect", () => {
-        console.log("user connected")
-        console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeere", userConnected?.result?._id)
-        connectedUser(userConnected?.result?._id)
-      })
-      return () => {
-        socket.off("connect")
-        socket.disconnect()
-        // socket.removeAllListeners()
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userConnected?.result?._id])
-
+  //   // console.log(ongline)
+  // }, [socket])
+  // console.log(ongline)
   const sendLike = (data) => {
     socket?.emit("send-like", data)
   }
@@ -82,6 +97,8 @@ export const SocketProvider = ({ children }) => {
         receiveRequest,
         getOnlineUsers,
         notificationss,
+        // ongline,
+        id,
       }}
     >
       {children}

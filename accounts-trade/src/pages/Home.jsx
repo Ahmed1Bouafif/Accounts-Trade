@@ -11,16 +11,18 @@ import HomeNotVerified from "./HomeNotVerified.jsx"
 const Home = () => {
   const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const { usernotifications } = useSelector((state) => ({ ...state.users }))
+  const { notifications } = useSelector((state) => ({ ...state.post }))
+
   // const { receiveLike, receiveComment, receiveRequest, socket, notificationss } = useSocket()
   const [carrousel, setCarrousel] = useState(false)
-  const [notifications, setNotificationss] = useState([])
+  const [notificationssss, setNotificationss] = useState([])
   // useLayoutEffect(() => {
   //   setId(userConnected?.result?._id)
   // }, [userConnected?.result?._id])
   // console.log(socket)
   useLayoutEffect(() => {
-    setNotificationss(usernotifications)
-  }, [usernotifications])
+    setNotificationss([...usernotifications, ...notifications])
+  }, [usernotifications, notifications])
 
   // useEffect(() => {
   //   //(callback) => callback.length >= 1 && setNotificationss((notifications) => [...new Set([...notifications, ...callback])])
@@ -58,7 +60,7 @@ const Home = () => {
   // // console.log(user)
   return (
     <div>
-      <NaveBar notifications={notifications} setCarrousel={setCarrousel} carrousel={carrousel} />
+      <NaveBar notifications={notificationssss} setCarrousel={setCarrousel} carrousel={carrousel} />
       {userConnected?.result?._id ? <HomeVerified /> : <HomeNotVerified carrousel={carrousel} />}
       <Footer />
     </div>

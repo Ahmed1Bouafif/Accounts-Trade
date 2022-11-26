@@ -14,7 +14,7 @@ const Chat = () => {
   const dispatch = useDispatch()
   const { users } = useSelector((state) => ({ ...state.users }))
   const [chat, setchat] = useState([])
-  const [thereIsOpenChat, setThereIsOpenChat] = useState(false)
+  const [thereIsOpenChat, setThereIsOpenChat] = useState({})
   useLayoutEffect(() => {
     dispatch(searchUsers())
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,6 +22,22 @@ const Chat = () => {
   useLayoutEffect(() => {
     setchat(users)
   }, [users])
+  // useEffect(() => {
+  //   if (chat.length && ligne.length) {
+  //     let newone = chat.slice(0)
+  //     let bob = ligne.slice(0)
+  //     let pose = 0
+  //     let thatone = {}
+  //     for (var i = 0; i < bob.length - 1; i++) {
+  //       pose = chat.map((object) => object._id).indexOf(bob[i])
+  //       thatone = newone[pose]
+  //       newone.splice(pose, 1)
+  //       newone.unshift(thatone)
+  //     }
+  //     setchatt(newone)
+  //     console.log("=========", newone)
+  //   }
+  // }, [ligne, chat])
   return (
     <div className="ChatContainer">
       <div className="chatUsers">
@@ -32,7 +48,7 @@ const Chat = () => {
           </svg>
         </span>
 
-        {!chat.length ? <ThreeCircles color="#ff0000" className="wait" height={80} width={80} /> : chat.map((user) => <OneChatUser user={user} setThereIsOpenChat={setThereIsOpenChat} />)}
+        {!chat.length ? <ThreeCircles color="#ff0000" className="wait" height={80} width={80} /> : chat.map((user) => <OneChatUser key={user._id} user={user} setThereIsOpenChat={setThereIsOpenChat} />)}
         {/* <OneChatUser />
         <OneChatUser />
         <OneChatUser />
@@ -40,7 +56,7 @@ const Chat = () => {
         <OneChatUser />
         <OneChatUser /> */}
       </div>
-      {thereIsOpenChat ? <PcSideChat /> : <PcSideChatNo />}
+      {Object.keys(thereIsOpenChat)?.length ? <PcSideChat user={thereIsOpenChat} /> : <PcSideChatNo />}
       {/* <PcSideChat /> */}
       {/* //{" "} */}
     </div>

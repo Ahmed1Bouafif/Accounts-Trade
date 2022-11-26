@@ -162,7 +162,7 @@ const usersSlice = createSlice({
       state.loading = false
       state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes, action.meta.arg._id], sentFriendRequestes: [...state.user.sentFriendRequestes, action.meta.arg.id], friends: state.user.friends }
       console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
-      state.usernotifications = [...state.usernotifications, ...action.payload.sendNofit.notifications]
+      state.usernotifications = [...state.usernotifications, ...action.payload.bob]
       state.thatNotii = action.payload.bob
       // console.log(action.payload.message)
     },

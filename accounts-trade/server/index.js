@@ -53,16 +53,20 @@ const addOnlineUser = (uid, sid) => {
 }
 const removeUser = (socketId) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId)
+  console.log(socketId)
 }
 const getUser = (id) => {
   return onlineUsers.find((user) => user.userId === id)
 }
 io.on("connection", (socket) => {
   // console.log("some one connected")
+  // socket.emit("online_users", onlineUsers)
+  // socket.emit("online_users", onlineUsers)
+
   socket.on("newUserOnline", (uid) => {
     addOnlineUser(uid, socket.id)
-    socket.emit("online_users", onlineUsers)
     console.log("=============Q ", onlineUsers)
+    io.sockets.emit("online_users", onlineUsers)
   })
   // socket.on("send-like", function (data) {
   //   console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
@@ -90,9 +94,13 @@ io.on("connection", (socket) => {
     console.log("fuuuuuuck", target)
   })
 
-  socket.on("disconnect", (socket) => {
+  socket.on("disconnect", () => {
     removeUser(socket.id)
     // socket.removeAllListeners()
+    // socket.emit("online_users", onlineUsers)
+    // socket.emit("online_users", onlineUsers)
+    io.sockets.emit("online_users", onlineUsers)
+    console.log(onlineUsers)
     console.log("oh he left")
   })
 })
