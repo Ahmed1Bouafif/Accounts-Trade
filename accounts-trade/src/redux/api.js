@@ -29,3 +29,4 @@ export const acceptFriend = (id, _id) => API.post(`/users/acceptFriend/${id}`, _
 export const changeUserName = (id, userName) => API.post(`/users/changeUserName/${id}`, userName)
 export const likePost = (id) => API.post(`/posts/like/${id}`)
 export const comment = (id, commentt, _id) => API.post(`/posts/comment/${id}`, { commentt, _id })
+export const sendMsg = (id, msg, _id) => API.post(`/users/chat`, { id, msg, _id })

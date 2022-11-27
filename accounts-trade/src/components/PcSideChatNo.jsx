@@ -27,7 +27,7 @@ const PcSideChatNo = () => {
         <div ref={scroll}></div> */}
       </div>
       <div className="chatbottom">
-        <input className="from-login-inputs chatin" disabled placeholder="qzsdfqsdfqsdf" type="text" />
+        <input className="from-login-inputs chatin" disabled placeholder="pick a friend then you can type a msg" type="text" />
         <button className="form-login-login chatsen" disabled>
           send
         </button>

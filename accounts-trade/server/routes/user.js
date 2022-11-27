@@ -1,5 +1,5 @@
 import express from "express"
-import { googleSignIn, signup, signin, searchUsers, getUser, addFriend, acceptFriend, cancelAddFriend, getUserNotifsSeen, getUserNoti, changeUserName, getUserNotifs } from "../controllers/user.js"
+import { googleSignIn, sendMsg, signup, signin, searchUsers, getUser, addFriend, acceptFriend, cancelAddFriend, getUserNotifsSeen, getUserNoti, changeUserName, getUserNotifs } from "../controllers/user.js"
 import auth from "../middlewares/auth.js"
 
 const router = express.Router()
@@ -17,5 +17,6 @@ router.post("/cancelAddFriend/:id", auth, cancelAddFriend)
 
 router.post("/acceptFriend/:id", auth, acceptFriend)
 router.post("/changeUserName/:id", auth, changeUserName)
+router.post("/chat", auth, sendMsg)
 
 export default router

@@ -259,3 +259,27 @@ export const changeUserName = async (req, res) => {
     res.status(500).json({ message: "Something Went Wrong" })
   }
 }
+export const sendMsg = async (req, res) => {
+  const { id, _id, msg } = req.body
+  console.log(id)
+  console.log(_id)
+  console.log(msg)
+
+  // const { userName } = req.body
+  try {
+    const userSender = await UserModal.findById(_id)
+    const userReceiver = await UserModal.findById(id)
+
+    //   const haha = (bob,tt)=>{
+    //     let bb = tt
+    //     if (bob.hasOwnProperty(bb)) {
+    //       bob[bb].push({ sender: "_id", receiver: "bb", msg: "this is msg", sendAt: new Date(), seen: false })
+    //     } else {
+    //       bob[bb] = [{ sender: "_id", receiver: "bb", msg: "this is msg", sendAt: new Date(), seen: false }]
+    //     }
+    // }
+    res.status(200).json({ message: `Your Name Is ${Object.keys(req.body)[0]} Now`, newName: Object.keys(req.body)[0] })
+  } catch (error) {
+    res.status(500).json({ message: "Something Went Wrong" })
+  }
+}

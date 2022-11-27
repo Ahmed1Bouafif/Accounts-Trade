@@ -79,6 +79,14 @@ export const changeUserName = createAsyncThunk("users/changeUserName", async ({ 
     return rejectWithValue(error.response.data)
   }
 })
+export const sendMsg = createAsyncThunk("users/Msg", async ({ id, msg, _id }, { rejectWithValue }) => {
+  try {
+    const response = await api.sendMsg(id, msg, _id)
+    return response.data
+  } catch (error) {
+    return rejectWithValue(error.response.data)
+  }
+})
 
 const usersSlice = createSlice({
   name: "users",
@@ -160,7 +168,7 @@ const usersSlice = createSlice({
     },
     [addFriend.fulfilled]: (state, action) => {
       state.loading = false
-      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes, action.meta.arg._id], sentFriendRequestes: [...state.user.sentFriendRequestes, action.meta.arg.id], friends: state.user.friends }
+      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes, action.meta.arg._id], sentFriendRequestes: [...state.user.sentFriendRequestes, action.meta.arg.id], friends: state.user.friends, chat: state.user.chat }
       console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
       state.usernotifications = [...state.usernotifications, ...action.payload.bob]
       state.thatNotii = action.payload.bob
@@ -175,7 +183,7 @@ const usersSlice = createSlice({
     },
     [cancelAddFriend.fulfilled]: (state, action) => {
       state.loading = false
-      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes.slice(0, state.user.receivedFriendRequestes.indexOf(action.meta.arg._id)), ...state.user.receivedFriendRequestes.slice(state.user.receivedFriendRequestes.indexOf(action.meta.arg._id) + 1, state.user.receivedFriendRequestes.length)], sentFriendRequestes: [...state.user.sentFriendRequestes.slice(0, state.user.sentFriendRequestes.indexOf(action.meta.arg.id)), ...state.user.sentFriendRequestes.slice(state.user.sentFriendRequestes.indexOf(action.meta.arg.id) + 1, state.user.sentFriendRequestes.length)], friends: state.user.friends }
+      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes.slice(0, state.user.receivedFriendRequestes.indexOf(action.meta.arg._id)), ...state.user.receivedFriendRequestes.slice(state.user.receivedFriendRequestes.indexOf(action.meta.arg._id) + 1, state.user.receivedFriendRequestes.length)], sentFriendRequestes: [...state.user.sentFriendRequestes.slice(0, state.user.sentFriendRequestes.indexOf(action.meta.arg.id)), ...state.user.sentFriendRequestes.slice(state.user.sentFriendRequestes.indexOf(action.meta.arg.id) + 1, state.user.sentFriendRequestes.length)], friends: state.user.friends, chat: state.user.chat }
       state.usernotifications = [...state.usernotifications, ...action.payload.sendNofit.notifications]
 
       // state.sentFriendsResquests = [...state.user.sentFriendRequestes.slice(0, state.sentFriendRequestes.indexOf(action.meta.arg.id)), ...state.sentFriendRequestes.slice(state.sentFriendRequestes.indexOf(action.meta.arg.id) + 1, state.sentFriendRequestes.length)]
@@ -191,7 +199,7 @@ const usersSlice = createSlice({
     },
     [acceptFriend.fulfilled]: (state, action) => {
       state.loading = false
-      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: [...state.user.friends, action.meta.arg.id] }
+      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: [...state.user.friends, action.meta.arg.id], chat: state.user.chat }
       // state.friends = [...state.friends, action.meta.arg.id]
       // console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
       // console.log(action.payload.message)
@@ -205,7 +213,7 @@ const usersSlice = createSlice({
     },
     [changeUserName.fulfilled]: (state, action) => {
       state.loading = false
-      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends }
+      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends, chat: state.user.chat }
       // state.friends = [...state.friends, action.meta.arg.id]
       console.log("=========>  Payloooaaaaaaaaaaaad", action.payload)
       // console.log(action.payload.message)
@@ -213,6 +221,20 @@ const usersSlice = createSlice({
     [changeUserName.rejected]: (state, action) => {
       state.loading = false
       state.error = action.payload.message
+    },
+    [sendMsg.pending]: (state, action) => {
+      state.loading = true
+    },
+    [sendMsg.fulfilled]: (state, action) => {
+      state.loading = false
+      // state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends }
+      // state.friends = [...state.friends, action.meta.arg.id]
+      // console.log("=========>  Payloooaaaaaaaaaaaad", action.payload)
+      // console.log(action.payload.message)
+    },
+    [sendMsg.rejected]: (state, action) => {
+      state.loading = false
+      // state.error = action.payload.message
     },
   },
 })
