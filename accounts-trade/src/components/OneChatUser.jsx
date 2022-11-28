@@ -1,20 +1,29 @@
+import moment from "moment"
 import React from "react"
+import { useLayoutEffect } from "react"
 import { useEffect, useState } from "react"
 // import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import useSocket from "../Socket/SocketState.js"
 
-const OneChatUser = ({ setThereIsOpenChat, user }) => {
+const OneChatUser = ({ setThereIsOpenChat, user, userChat }) => {
   //   const navigate = useNavigate()
   const { userConnected } = useSelector((state) => ({ ...state.auth }))
   const { id } = useSocket()
   const [ligne, setLigne] = useState([])
+  const [lastMsg, setLastMsg] = useState({})
   useEffect(() => {
     // getOnlineUsers((isOnligne) => {
     setLigne(id)
     // })
   }, [id])
-
+  useLayoutEffect(() => {
+    let id = user._id
+    if (userChat[id]) {
+      setLastMsg(userChat[id][userChat[id]?.length - 1])
+    }
+  }, [userChat])
+  console.log("hhhhhhhhh", lastMsg)
   return (
     <div onClick={() => setThereIsOpenChat(user)} className="ownerC">
       <div className="imgN">
@@ -31,10 +40,10 @@ const OneChatUser = ({ setThereIsOpenChat, user }) => {
               </div>
             )}
           </div>
-          <p>this is the last message</p>
+          <p>{lastMsg?.msg ? <span className="lastMsg">{lastMsg.msg}</span> : <span className="lastMsg">No Msgs Yet</span>}</p>
         </div>
       </div>
-      <p>22:30</p>
+      {lastMsg?.sendAt ? <p>{moment(lastMsg.sendAt).fromNow()}</p> : <></>}
     </div>
   )
 }

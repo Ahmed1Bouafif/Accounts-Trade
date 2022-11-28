@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
   receivedFriendRequestes: [String],
   friends: [String],
   notifications: [],
-  chat: {},
+  chat: { type: Object, default: { id: [] } },
 })
 
 export default mongoose.model("user", userSchema)

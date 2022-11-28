@@ -84,10 +84,18 @@ export const SocketProvider = ({ children }) => {
     })
     socket?.off("receive_request", callback)
   }
+  const sendMsgs = (data) => {
+    socket.emit("sendMsg", data)
+  }
+  const receiveMsg = (callback) => {
+    socket.on("receiveMsg", callback)
+  }
 
   return (
     <SocketContext.Provider
       value={{
+        receiveMsg,
+        sendMsgs,
         socket,
         sendLike,
         receiveLike,

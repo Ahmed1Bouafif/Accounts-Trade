@@ -227,6 +227,8 @@ const usersSlice = createSlice({
     },
     [sendMsg.fulfilled]: (state, action) => {
       state.loading = false
+      state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userImage, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends, chat: action.payload.userSender.chat }
+
       // state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends }
       // state.friends = [...state.friends, action.meta.arg.id]
       // console.log("=========>  Payloooaaaaaaaaaaaad", action.payload)
@@ -234,7 +236,7 @@ const usersSlice = createSlice({
     },
     [sendMsg.rejected]: (state, action) => {
       state.loading = false
-      // state.error = action.payload.message
+      state.error = action.payload.message
     },
   },
 })

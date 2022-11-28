@@ -3,13 +3,13 @@ import React from "react"
 // import MsgReceived from "./MsgReceived"
 // import { useRef } from "react"
 // import { useEffect } from "react"
-const PcSideChatNo = () => {
+const PcSideChatNo = ({ css }) => {
   //   const scroll = useRef(null)
   //   useEffect(() => {
   //     scroll.current?.scrollIntoView()
   //   }, [])
   return (
-    <div className="OtherPart ">
+    <div className={`OtherPart ${css}`}>
       <div className="chathead">
         <img className="ownerimg" src="https://www.pngfind.com/pngs/m/32-329409_question-mark-png-transparent-three-question-mark-png.png" alt="" />
         <p className="descriptionx">Pick One User To Chat With</p>

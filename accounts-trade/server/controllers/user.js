@@ -162,8 +162,8 @@ export const addFriend = async (req, res) => {
   try {
     // console.log("1")
     // console.log(req.body)
-    let userReceiver = await UserModal.findById(id)
-    let userSender = await UserModal.findById(Object.keys(req.body)[0])
+    const userReceiver = await UserModal.findById(id)
+    const userSender = await UserModal.findById(Object.keys(req.body)[0])
     const RId = Object.keys(req.body)[0]
     userReceiver.receivedFriendRequestes.push(RId)
     userSender.sentFriendRequestes.push(id)
@@ -193,8 +193,8 @@ export const cancelAddFriend = async (req, res) => {
   try {
     // console.log("1")
     // console.log(req.body)
-    let userReceiver = await UserModal.findById(id)
-    let userSender = await UserModal.findById(Object.keys(req.body)[0])
+    const userReceiver = await UserModal.findById(id)
+    const userSender = await UserModal.findById(Object.keys(req.body)[0])
     const RId = Object.keys(req.body)[0]
 
     // console.log("ggggggggggggggggggggggggggggggggggggggggggggg", Object.keys(req.body)[0])
@@ -225,8 +225,8 @@ export const acceptFriend = async (req, res) => {
   try {
     // console.log("1")
     // console.log(req.body)
-    let userReceiver = await UserModal.findById(id)
-    let userSender = await UserModal.findById(Object.keys(req.body)[0])
+    const userReceiver = await UserModal.findById(id)
+    const userSender = await UserModal.findById(Object.keys(req.body)[0])
     const RId = Object.keys(req.body)[0]
     userReceiver.receivedFriendRequestes = [...userReceiver.receivedFriendRequestes.slice(0, userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0])), ...userReceiver.receivedFriendRequestes.slice(userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0]) + 1, userReceiver.receivedFriendRequestes.length)]
     userSender.sentFriendRequestes = [...userSender.sentFriendRequestes.slice(0, userSender.sentFriendRequestes.indexOf(id)), ...userSender.sentFriendRequestes.slice(userSender.sentFriendRequestes.indexOf(id) + 1, userSender.sentFriendRequestes.length)]
@@ -261,24 +261,29 @@ export const changeUserName = async (req, res) => {
 }
 export const sendMsg = async (req, res) => {
   const { id, _id, msg } = req.body
-  console.log(id)
-  console.log(_id)
-  console.log(msg)
+  // console.log(id)
+  // console.log(_id)
+  // console.log(msg)
 
   // const { userName } = req.body
   try {
     const userSender = await UserModal.findById(_id)
     const userReceiver = await UserModal.findById(id)
 
-    //   const haha = (bob,tt)=>{
-    //     let bb = tt
-    //     if (bob.hasOwnProperty(bb)) {
-    //       bob[bb].push({ sender: "_id", receiver: "bb", msg: "this is msg", sendAt: new Date(), seen: false })
-    //     } else {
-    //       bob[bb] = [{ sender: "_id", receiver: "bb", msg: "this is msg", sendAt: new Date(), seen: false }]
-    //     }
-    // }
-    res.status(200).json({ message: `Your Name Is ${Object.keys(req.body)[0]} Now`, newName: Object.keys(req.body)[0] })
+    if (userSender.chat.hasOwnProperty(id)) {
+      userSender.chat[id].push({ sender: _id, msg: msg, sendAt: new Date(), seen: false })
+    } else {
+      userSender.chat[id] = [{ sender: _id, msg: msg, sendAt: new Date(), seen: false }]
+    }
+    if (userReceiver.chat.hasOwnProperty(_id)) {
+      userReceiver.chat[_id].push({ sender: _id, msg: msg, sendAt: new Date(), seen: false })
+    } else {
+      userReceiver.chat[_id] = [{ sender: _id, msg: msg, sendAt: new Date(), seen: false }]
+    }
+    await UserModal.findByIdAndUpdate(_id, userSender, { new: true })
+    await UserModal.findByIdAndUpdate(id, userReceiver, { new: true })
+
+    res.status(200).json({ message: "Msg sent", userSender })
   } catch (error) {
     res.status(500).json({ message: "Something Went Wrong" })
   }

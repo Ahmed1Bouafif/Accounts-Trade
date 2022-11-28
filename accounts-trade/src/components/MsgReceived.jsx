@@ -1,7 +1,7 @@
 import React from "react"
 
-const MsgReceived = () => {
-  return <p className="msgReceived">qsfdgqsg sqfdgqsdg qsdgqsdg qsdgqsdg qsdgqsdgq sdgqsdgqs dgqsdgqsd gqsdgqsdg qsdgqsdg qsdgqsdg qsdg msgReceived</p>
+const MsgReceived = ({ msg }) => {
+  return <p className="msgReceived">{msg}</p>
 }
 
 export default MsgReceived

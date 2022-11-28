@@ -78,6 +78,12 @@ io.on("connection", (socket) => {
   //   socket.to(targetTokent).emit("receive-like", data)
   //   console.log("fuuuuuuck", target)
   // })
+  socket.on("sendMsg", function (data) {
+    console.log(data)
+    const target = getUser(data.receiver)
+    console.log(target)
+    socket.to(target?.socketId).emit("receiveMsg", data)
+  })
   socket.on("send_comment", function (data) {
     console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
     const target = getUser(data?.poster)
