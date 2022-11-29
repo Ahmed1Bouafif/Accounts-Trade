@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
     console.log(data)
     const target = getUser(data.receiver)
     console.log(target)
-    socket.to(target?.socketId).emit("receiveMsg", data)
+    socket.to(target?.socketId).emit("receiveMsg", { data, id: data.sender })
   })
   socket.on("send_comment", function (data) {
     console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)

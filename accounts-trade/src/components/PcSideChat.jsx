@@ -32,16 +32,17 @@ const PcSideChat = ({ user, userChat, setmsgs }) => {
       setmsg("")
     }
   }
-  useEffect(() => {
-    // console.log(userChat)
-    // console.log("whyyyyyyyyyyyyyyyyy", userChat[id])
-    // console.log("whyyyyyyyyyyyyyyyyy", userChat[_id])
-    const idR = id
-    // const idS = _id
-    receiveMsg((data) => setmsgs({ ...userChat, idR: [...userChat[idR], data] }))
-    // console.log();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [receiveMsg])
+  // useEffect(() => {
+  //   // console.log(userChat)
+  //   // console.log("whyyyyyyyyyyyyyyyyy", userChat[id])
+  //   // console.log("whyyyyyyyyyyyyyyyyy", userChat[_id])
+  //   const idR = id
+  //   // const idS = _id
+  //   receiveMsg((data) => setmsgs({ ...userChat, idR: [...userChat[idR], data] }))
+  //   console.log("goooooooooooooooooooooooo")
+  //   // console.log();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [receiveMsg])
 
   useEffect(() => {
     scroll.current?.scrollIntoView()
@@ -56,7 +57,7 @@ const PcSideChat = ({ user, userChat, setmsgs }) => {
       </div>
 
       <div className="chatmain">
-        {userChat[user._id]?.length ? userChat[user._id].map((u) => (u.sender === user._id ? <MsgSend key={u._id} msg={u.msg} /> : <MsgReceived key={u._id} msg={u.msg} />)) : <div>No Msg Between You And This User</div>}
+        {userChat[user._id]?.length ? userChat[user._id].map((u, i) => (u.sender === user._id ? <MsgSend key={i} msg={u.msg} /> : <MsgReceived key={i} msg={u.msg} />)) : <div>No Msg Between You And This User</div>}
         <div ref={scroll}></div>
       </div>
 
