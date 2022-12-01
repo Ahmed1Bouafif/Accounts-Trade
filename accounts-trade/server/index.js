@@ -6,7 +6,6 @@ import postRouter from "./routes/post.js"
 import bodyParser from "body-parser"
 import { Server } from "socket.io"
 import { PostLike } from "./controllers/post.js"
-// import { PostLike } from "./controllers/post.js"
 import { init } from "./socket-io.js"
 const app = express()
 app.use(bodyParser.json({ limit: "200mb" }))
@@ -18,7 +17,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
 
-// password: jemCUlMQhaXwLLLT
 const MONGODB_URL = "mongodb+srv://ahmedbob:jemCUlMQhaXwLLLT@cluster0.b7e9h.mongodb.net/tradeaccounts?retryWrites=true&w=majority"
 
 const port = 8000
@@ -30,10 +28,8 @@ mongoose
     console.log(`${err} did not connect`)
   })
 export const io = init(server)
-// console.log("=============== hhhhhhhhhhhhhhhhhhhhhh", io)
 
 let onlineUsers = []
-// let notifications = []
 const addOnlineUser = (uid, sid) => {
   if (!onlineUsers.some(({ userId }) => userId === uid)) {
     onlineUsers.push({ userId: uid, socketId: sid })
@@ -53,63 +49,38 @@ const addOnlineUser = (uid, sid) => {
 }
 const removeUser = (socketId) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId)
-  console.log(socketId)
 }
 const getUser = (id) => {
   return onlineUsers.find((user) => user.userId === id)
 }
 io.on("connection", (socket) => {
-  // console.log("some one connected")
-  // socket.emit("online_users", onlineUsers)
-  // socket.emit("online_users", onlineUsers)
+
 
   socket.on("newUserOnline", (uid) => {
     addOnlineUser(uid, socket.id)
-    console.log("=============Q ", onlineUsers)
     io.sockets.emit("online_users", onlineUsers)
   })
-  // socket.on("send-like", function (data) {
-  //   console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
-  //   const target = getUser(data?.poster)
-  //   const targetTokent = target?.socketId || null
-  //   // notifications = [...new Set([...notifications, data])]
-  //   // notifications.push(data)
-  //   // console.log([...new Set(notifications)])
-  //   socket.to(targetTokent).emit("receive-like", data)
-  //   console.log("fuuuuuuck", target)
-  // })
+ 
   socket.on("sendMsg", function (data) {
-    console.log(data)
     const target = getUser(data.receiver)
-    console.log(target)
     socket.to(target?.socketId).emit("receiveMsg", { data, id: data.sender })
   })
   socket.on("send_comment", function (data) {
-    console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data)
     const target = getUser(data?.poster)
     const targetTokent = target?.socketId || null
-    // notifications.push(data)
     socket.to(targetTokent).emit("receive_comment", data)
-    console.log("fuuuuuuck", target)
   })
   socket.on("send_request", function (data) {
     const target = getUser(data?.poster)
     const targetTokent = target?.socketId || null
-    // notifications.push(data)
     socket.to(targetTokent).emit("receive_request", data)
-    console.log("fuuuuuuck", target)
   })
 
   socket.on("disconnect", () => {
     removeUser(socket.id)
-    // socket.removeAllListeners()
-    // socket.emit("online_users", onlineUsers)
-    // socket.emit("online_users", onlineUsers)
+   
     io.sockets.emit("online_users", onlineUsers)
-    console.log(onlineUsers)
-    console.log("oh he left")
   })
 })
 const socketIoObject = io
 export default socketIoObject
-// socket

@@ -28,7 +28,6 @@ export const getUserNoti = createAsyncThunk("users/getUserNoti", async (id, { re
 export const getUserNotifs = createAsyncThunk("users/getUserNotifs", async ({ id }, { rejectWithValue }) => {
   try {
     const response = await api.getUserNotifs(id)
-    // console.log("shit", id)
     return response.data
   } catch (error) {
     return rejectWithValue(error.response.data)
@@ -37,7 +36,6 @@ export const getUserNotifs = createAsyncThunk("users/getUserNotifs", async ({ id
 export const getUserNotifsSeen = createAsyncThunk("users/getUserNotifsSeen", async ({ id }, { rejectWithValue }) => {
   try {
     const response = await api.getUserNotifsSeen(id)
-    // console.log("shit", id)
     return response.data
   } catch (error) {
     return rejectWithValue(error.response.data)
@@ -121,7 +119,6 @@ const usersSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       state.loading = false
       state.user = action.payload
-      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", state.user)
     },
     [getUser.rejected]: (state, action) => {
       state.loading = false
@@ -144,12 +141,10 @@ const usersSlice = createSlice({
     [getUserNotifs.fulfilled]: (state, action) => {
       state.loading = false
       state.usernotifications = action.payload
-      // console.log("notiiiiiif", state.usernotifications)
     },
     [getUserNotifs.rejected]: (state, action) => {
       state.loading = false
       state.error = action.payload.message
-      console.log("messaaaage", action.payload)
     },
     [getUserNotifsSeen.pending]: (state, action) => {
       state.loading = true
@@ -157,7 +152,6 @@ const usersSlice = createSlice({
     [getUserNotifsSeen.fulfilled]: (state, action) => {
       state.loading = false
       state.usernotifications = action.payload.notifications
-      // console.log("notiiiiiif", state.usernotifications)
     },
     [getUserNotifsSeen.rejected]: (state, action) => {
       state.loading = false
@@ -169,10 +163,8 @@ const usersSlice = createSlice({
     [addFriend.fulfilled]: (state, action) => {
       state.loading = false
       state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: [...state.user.receivedFriendRequestes, action.meta.arg._id], sentFriendRequestes: [...state.user.sentFriendRequestes, action.meta.arg.id], friends: state.user.friends, chat: state.user.chat }
-      console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
       state.usernotifications = [...state.usernotifications, ...action.payload.bob]
       state.thatNotii = action.payload.bob
-      // console.log(action.payload.message)
     },
     [addFriend.rejected]: (state, action) => {
       state.loading = false
@@ -187,8 +179,6 @@ const usersSlice = createSlice({
       state.usernotifications = [...state.usernotifications, ...action.payload.sendNofit.notifications]
 
       // state.sentFriendsResquests = [...state.user.sentFriendRequestes.slice(0, state.sentFriendRequestes.indexOf(action.meta.arg.id)), ...state.sentFriendRequestes.slice(state.sentFriendRequestes.indexOf(action.meta.arg.id) + 1, state.sentFriendRequestes.length)]
-      // console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
-      // console.log(action.payload.message)
     },
     [cancelAddFriend.rejected]: (state, action) => {
       state.loading = false
@@ -201,8 +191,6 @@ const usersSlice = createSlice({
       state.loading = false
       state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: state.user.userName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: [...state.user.friends, action.meta.arg.id], chat: state.user.chat }
       // state.friends = [...state.friends, action.meta.arg.id]
-      // console.log("=========>  Payloooaaaaaaaaaaaad", action.meta.arg)
-      // console.log(action.payload.message)
     },
     [acceptFriend.rejected]: (state, action) => {
       state.loading = false
@@ -215,7 +203,6 @@ const usersSlice = createSlice({
       state.loading = false
       state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends, chat: state.user.chat }
       // state.friends = [...state.friends, action.meta.arg.id]
-      console.log("=========>  Payloooaaaaaaaaaaaad", action.payload)
       // console.log(action.payload.message)
     },
     [changeUserName.rejected]: (state, action) => {
@@ -231,8 +218,6 @@ const usersSlice = createSlice({
 
       // state.user = { _id: state.user._id, email: state.user.email, password: state.user.password, userImage: state.user.userImage, userName: action.payload.newName, receivedFriendRequestes: state.user.receivedFriendRequestes, sentFriendRequestes: state.user.sentFriendRequestes, friends: state.user.friends }
       // state.friends = [...state.friends, action.meta.arg.id]
-      // console.log("=========>  Payloooaaaaaaaaaaaad", action.payload)
-      // console.log(action.payload.message)
     },
     [sendMsg.rejected]: (state, action) => {
       state.loading = false

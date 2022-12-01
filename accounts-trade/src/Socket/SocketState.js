@@ -37,12 +37,10 @@ export const SocketProvider = ({ children }) => {
     // if (connectedUserr.result._id) {
     socket.on("connect", () => {
       console.log("user connected")
-      console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeere", connectedUserr.result._id)
       connectedUser(connectedUserr.result._id)
       socket.on("online_users", (callback) => setid(callback))
     })
     return () => {
-      console.log("====>", socket)
       socket.on("online_users", (callback) => setid(callback))
       socket.off()
       socket.disconnect()

@@ -23,7 +23,6 @@ const OneChatUser = ({ setThereIsOpenChat, user, userChat }) => {
       setLastMsg(userChat[id][userChat[id]?.length - 1])
     }
   }, [userChat])
-  console.log("hhhhhhhhh", lastMsg)
   return (
     <div onClick={() => setThereIsOpenChat(user)} className="ownerC">
       <div className="imgN">

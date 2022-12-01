@@ -14,25 +14,7 @@ const HomeVerified = () => {
   const [type, setType] = useState("All Games")
   const [allPosts, setAllPosts] = useState([])
   const [id, setId] = useState(userConnected?.result?._id)
-  // const [socket, setSocket] = useState(null)
-  // const ref = useRef(null)
-  // useEffect(() => {
-  //   setSocket(io("http://localhost:8000"))
-  // }, [])
-  // useEffect(() => {
-  //   socket?.emit("newUserOnline", userConnected?.result)
-  //   // socket?.on("works", function (data) {
-  //   //   console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeey", data)
-  //   // })
-  // }, [socket, userConnected?.result])
-
-  // socket.on("connect", () => {
-  //   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
-  // })
-
-  // socket.on("disconnect", () => {
-  //   console.log(socket.id) // undefined
-  // })
+ 
   useLayoutEffect(() => {
     setId(userConnected?.result?._id)
   }, [userConnected?.result?._id])

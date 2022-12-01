@@ -4,7 +4,6 @@ import * as api from "../api.js"
 export const createPost = createAsyncThunk("post/createPost", async ({ updatedPost, navigate, toast }, { rejectWithValue }) => {
   try {
     const response = await api.createPost(updatedPost) // because we added the name
-    console.log("================================================================================>>>>>>>>", updatedPost)
     toast.success("Post Added Succesfully")
     navigate("/")
     return response.data
@@ -157,12 +156,10 @@ const postSlice = createSlice({
         arg: { _id },
       } = action.meta
       if (_id) {
-        console.log("haha", action.payload)
         state.posts = state.posts.map((item) => (item._id === _id ? action.payload.updatesPost : item))
         state.post = action.payload.updatesPost
         state.notifications = [...state.notifications, ...action.payload.sendNofit.notifications]
         state.thatNoti = action.payload.bob
-        console.log("blooooooo", action.payload.sendNofit.notifications)
         // state.notifications = [...new Set(state.notifications)]
       }
       state.userPosts = state.userPosts.filter((item) => item._id !== action.payload.posts[0]._id)

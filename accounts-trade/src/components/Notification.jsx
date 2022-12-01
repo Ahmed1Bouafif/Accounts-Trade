@@ -31,8 +31,6 @@ const Notification = ({ notificationss, setMobileNotiOpen }) => {
   //   var filtered = result.filter((u) => u.liker !== userConnected?.result?._id)
 
   //   setNotifications(filtered.reverse())
-  //   // console.log("hahahahahahhahaha", result[0]?.liker)
-  //   // console.log("hahahahahahhahaha", userConnected._id)
   // }, [notifications, usernotifications, userConnected?.result?._id, thatNoti])
   // useEffect(() => {
   //   if (notificationss) {

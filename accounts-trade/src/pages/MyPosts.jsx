@@ -28,7 +28,6 @@ const MyPosts = () => {
   }, [])
   const onHandelSubmit = (id) => {
     dispatch(deletePostById(id))
-    // console.log("blablablalabjkavzljbaljzsbd", id)
   }
   return (
     <>

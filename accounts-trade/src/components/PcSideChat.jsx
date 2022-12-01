@@ -34,12 +34,9 @@ const PcSideChat = ({ user, userChat, setmsgs }) => {
   }
   // useEffect(() => {
   //   // console.log(userChat)
-  //   // console.log("whyyyyyyyyyyyyyyyyy", userChat[id])
-  //   // console.log("whyyyyyyyyyyyyyyyyy", userChat[_id])
   //   const idR = id
   //   // const idS = _id
   //   receiveMsg((data) => setmsgs({ ...userChat, idR: [...userChat[idR], data] }))
-  //   console.log("goooooooooooooooooooooooo")
   //   // console.log();
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [receiveMsg])

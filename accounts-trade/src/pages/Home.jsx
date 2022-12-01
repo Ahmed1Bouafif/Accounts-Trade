@@ -41,15 +41,12 @@ const Home = () => {
   // useLayoutEffect(() => {
   //   socket?.on("receive-like", function (data) {
   //     setNoti(data)
-  //     console.log("fuck")
   //   })
   //   socket?.on("receive_request", function (data) {
   //     setNoti(data)
-  //     console.log("fuck")
   //   })
   //   socket?.on("receive_comment", function (data) {
   //     setNoti(data)
-  //     console.log("fuck")
   //   })
   //   // setNoti(thatNoti)
   // }, [socket, notii])

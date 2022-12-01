@@ -147,7 +147,6 @@ export const getUserNotifsSeen = async (req, res) => {
     const user = await UserModal.findByIdAndUpdate(notifs, {})
     user.notifications.map((u) => (u.seen = true))
     const newNotifs = await UserModal.findByIdAndUpdate(notifs, user)
-    // console.log("blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     // console.log(user)
     // console.log("==========>", newNotifs)
     res.status(200).json(user)
@@ -168,8 +167,6 @@ export const addFriend = async (req, res) => {
     userReceiver.receivedFriendRequestes.push(RId)
     userSender.sentFriendRequestes.push(id)
     // await UserModal.updateOne(userSender, { sentFriendRequestes: [...userSender.sentFriendRequestes, id] }, { new: true })
-    // console.log("rrrrrrrrrrrrrrrrrr", userReceiver)
-    // console.log("ssssssssssssssssss", sendNofit)
     let bob = { type: "sendRequest", receiver: id, sender: { id: Object.keys(req.body)[0], name: userSender.userName, image: userSender.userImage }, sendAt: new Date(), seen: false, opened: false }
     if (userReceiver.notifications.findIndex((user) => String(user?.sender?.id) === id) === -1 || userReceiver.notifications.findIndex((user) => String(user?.receiver + user?.sender?.id) === String(id + Object.keys(req.body)[0])) === -1) {
       userReceiver.notifications.push(bob)
@@ -182,7 +179,6 @@ export const addFriend = async (req, res) => {
     await UserModal.findByIdAndUpdate(RId, userSender, { new: true })
 
     console.log(userReceiver.notifications.findIndex((user) => String(user.sender) === String(Object.keys(req.body)[0])) === -1 || userReceiver.notifications.findIndex((user) => String(user.receiver + user.sender) === String(id + Object.keys(req.body)[0])) === -1)
-    console.log("haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", bob)
     res.status(200).json({ message: "Invation Sent", sendNofit, bob })
   } catch (error) {
     res.status(500).json({ message: "Something Went Wrong" })
@@ -197,7 +193,6 @@ export const cancelAddFriend = async (req, res) => {
     const userSender = await UserModal.findById(Object.keys(req.body)[0])
     const RId = Object.keys(req.body)[0]
 
-    // console.log("ggggggggggggggggggggggggggggggggggggggggggggg", Object.keys(req.body)[0])
     // console.log("2")
     userReceiver.receivedFriendRequestes = [...userReceiver.receivedFriendRequestes.slice(0, userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0])), ...userReceiver.receivedFriendRequestes.slice(userReceiver.receivedFriendRequestes.indexOf(Object.keys(req.body)[0]) + 1, userReceiver.receivedFriendRequestes.length)]
     userSender.sentFriendRequestes = [...userSender.sentFriendRequestes.slice(0, userSender.sentFriendRequestes.indexOf(id)), ...userSender.sentFriendRequestes.slice(userSender.sentFriendRequestes.indexOf(id) + 1, userSender.sentFriendRequestes.length)]

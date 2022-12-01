@@ -57,7 +57,6 @@ const Profile = () => {
   //     setRequestSent(true)
   //   }
   // }, [sentFriendsResquests, id])
-  // console.log("hahahahhahahahahahahhahahahahahaha", sentFriendsResquests)
   // console.log(id)
   useEffect(() => {
     var num = 0
@@ -75,7 +74,6 @@ const Profile = () => {
     }
     if (user !== userData) {
       setUserData(user)
-      // console.log("blablabla", userData.receivedFriendsResquests)
     }
   }, [connectedUser.result._id, user, userData])
   const addfriend = () => {

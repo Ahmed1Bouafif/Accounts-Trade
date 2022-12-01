@@ -47,7 +47,6 @@ const Post = ({ comments, imageFile, description, title, _id, createdAt, creator
   // useEffect(() => {
   //   // sendLike
   //   if (noti?.type) {
-  //     console.log("hahahaha here", noti)
   //     sendLike(noti)
   //     setNoti({})
   //   }

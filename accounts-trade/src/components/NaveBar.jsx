@@ -131,7 +131,6 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
   // } else {
   //   noti.push(thatNoti)
   // }
-  // console.log("=============>", noti)
   // var result = noti.reduce((unique, o) => {
   //   console.log(".", o)
   //   console.log("..", unique)
@@ -141,7 +140,6 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
   //   }
   //   return unique
   // }, [])
-  // console.log("=============>>>>>", result)
 
   // console.log(result)
   //   const filter = (ok) => {
@@ -175,8 +173,6 @@ const NaveBar = ({ setCarrousel, carrousel, notifications }) => {
   //   // var filtered = noti.filter((u) => u.liker !== userConnected?.result?._id || u.commenter !== userConnected?.result?._id || u.sender !== userConnected?.result?._id)
   //   setNotificationss(filter(notificationss))
 
-  //   // console.log("hahahahahahhahahadfhsdfhsdfh", filtered)
-  //   // console.log("hahahahahahhahaha", noti)
   //   // notifications,
   // }, [userConnected?.result?._id, notificationss, notifications, usernotifications])
 

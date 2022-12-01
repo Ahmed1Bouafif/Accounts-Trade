@@ -53,8 +53,6 @@ const OnePost = () => {
     setUserss(users)
     // setNoti(thatNoti)
   }, [post, users])
-  //   console.log(".......", postt)
-  //   console.log("..", post)
   const handleLike = () => {
     dispatch(likePost({ _id }))
   }

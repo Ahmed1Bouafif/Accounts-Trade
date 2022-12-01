@@ -51,15 +51,12 @@ const Chat = () => {
   }, [users])
   useEffect(() => {
     // console.log(userChat)
-    // console.log("whyyyyyyyyyyyyyyyyy", userChat[id])
-    // console.log("whyyyyyyyyyyyyyyyyy", userChat[_id])
     // const idR = id
     // const idS = _id
     receiveMsg((data) => setmsgs((old) => ({ ...old, [data.id]: [...old[data.id], data.data] })))
     // console.log();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log("goooooooooooooooooooooooo", msgs)
   // useEffect(() => {
   //   if (chat.length && ligne.length) {
   //     let newone = chat.slice(0)
@@ -73,7 +70,6 @@ const Chat = () => {
   //       newone.unshift(thatone)
   //     }
   //     setchatt(newone)
-  //     console.log("=========", newone)
   //   }
   // }, [ligne, chat])
   // console.log(Window.innerHeight + "px")
